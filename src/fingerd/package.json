@@ -1,0 +1,21 @@
+{
+  "name": "fingerd",
+  "version": "0.0.24",
+  "description": "The event management scheme of the mobile end is based on the finger",
+  "main": "dist/fingerd.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "event",
+    "finger",
+    "fingerd"
+  ],
+  "author": "HcySunYang",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": ""
+}

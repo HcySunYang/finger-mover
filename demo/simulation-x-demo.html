@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>simulation-scroll-x demo</title>
+    <style>
+        body {
+            background-color: #ccc;
+        }
+        #box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        #scroll-box {
+            background: #19bbff;
+            width: 3000px;
+        }
+        #scroll-box p {
+            margin: 0;
+            height: 40px;
+            line-height: 40px;
+            text-indent: 20px;
+            color: #fff;
+            white-space: nowrap;
+        }
+    </style>
+    <!-- debug script Replace your own IP address -->
+    <!-- <script src='http://10.216.96.119:6789/target/target-script-min.js#anonymous'></script> -->
+</head>
+<body>
+
+<div id="box">
+    <div id="scroll-box">
+        <div class="content"></div>
+    </div>
+</div>
+
+<script src="../dist/finger-mover.js"></script>
+<script src="../src/plugins/simulation-scroll-x/dist/simulation-scroll-x.js"></script>
+<script>
+    function createTxt (i) {
+        var str = ''
+        for (var k = 0; k < 100; k++) {
+            str += i + '----'
+        }
+        return str
+    }
+
+    var content = document.querySelector('.content')
+    for (var i = 0; i < 100; i++) {
+        var p = document.createElement('p')
+        p.innerHTML = createTxt(i)
+        content.appendChild(p)
+    }
+
+</script>
+<script>
+    var fm = new Fmover({
+        el: '#scroll-box',
+        plugins: [
+            simulationScrollX()
+        ]
+    })
+</script>
+
+</body>
+</html>

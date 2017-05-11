@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>contacts demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        #box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            background-color: #f0f0f6;
+        }
+        .link-p {
+            height: 20px;
+            line-height: 20px;
+            text-indent: 9px;
+            font-size: 12px;
+            color: #999;
+            background-color: #f0f0f6;
+        }
+        .content ul {
+            padding-left: 9px;
+            background-color: #fff;
+        }
+        .content ul li {
+            height: 46px;
+            line-height: 46px;
+            border-bottom: 1px solid #dfdfdf;
+        }
+        .side-bar-nav {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #333;
+            width: 25px;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+        }
+        .side-bar-nav li {
+            height: 16px;
+            line-height: 16px;
+        }
+    </style>
+    <!-- debug script Replace your own IP address -->
+    <!--<script src='http://10.216.96.119:6789/target/target-script-min.js#anonymous'></script>-->
+</head>
+<body>
+
+<div id="box">
+    <div id="scroll-box">
+        <div class="content">
+            <!--<p class="link-p">A</p>
+            <ul>
+                <li>AAAAAAAA</li>
+                <li>AAAAAAAA</li>
+                <li>AAAAAAAA</li>
+                <li>AAAAAAAA</li>
+                <li>AAAAAAAA</li>
+                <li>AAAAAAAA</li>
+                <li>AAAAAAAA</li>
+            </ul>-->
+        </div>
+    </div>
+    <ul class="side-bar-nav">
+        <li>A</li>
+    </ul>
+</div>
+
+<script src="../dist/finger-mover.js"></script>
+<script src="../src/plugins/simulation-scroll-y/dist/simulation-scroll-y.js"></script>
+<script>
+    function createTpl (letter) {
+        var str = '<p class="link-p" id="link' + letter + '">' + letter + '</p>'
+            +     '<ul>'
+            +     '<li>' + letter + letter + letter + letter + letter + letter + '</li>'
+            +     '<li>' + letter + letter + letter + letter + letter + letter + '</li>'
+            +     '<li>' + letter + letter + letter + letter + letter + letter + '</li>'
+            +     '<li>' + letter + letter + letter + letter + letter + letter + '</li>'
+            +     '<li>' + letter + letter + letter + letter + letter + letter + '</li>'
+            +     '<li>' + letter + letter + letter + letter + letter + letter + '</li>'
+            +     '<li>' + letter + letter + letter + letter + letter + letter + '</li>'
+            +     '</ul>'
+        return str
+    }
+    var content = document.querySelector('.content')
+    var en = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    var tpl = ''
+    en.forEach(function (o, i, a) {
+        tpl += createTpl(o)
+    })
+    content.innerHTML = tpl
+
+
+    var sideBar = document.querySelector('.side-bar-nav')
+    var sideContent = ''
+    en.forEach(function (o, i, a) {
+        sideContent += '<li>' + o + '</li>'
+    })
+    sideBar.innerHTML = sideContent
+</script>
+<script>
+    var fm = new Fmover({
+        el: '#scroll-box',
+        plugins: [
+            simulationScrollY()
+        ]
+    })
+
+    var box = document.querySelector('#box')
+    sideBar.addEventListener('touchstart', touchFn, false)
+    sideBar.addEventListener('touchmove', touchFn, false)
+    function touchFn (event) {
+        var curTop = event.touches[0].clientY
+        var top = Fmover.getRelativeRect(box, sideBar).top - sideBar.offsetHeight / 2
+        var range = curTop - top
+        if (range < 0) {
+            range = 0
+        } else if (range > sideBar.offsetHeight) {
+            range = sideBar.offsetHeight - 16
+        }
+        var index = parseInt(range / 16)
+        fm[0].scrollTo(document.querySelector('#link' + en[index]), 0, true)
+        event.preventDefault()
+        event.stopPropagation()
+    }
+</script>
+
+</body>
+</html>

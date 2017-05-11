@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>slide-y demo</title>
+    <style>
+        #box {
+            height: 250px;
+        }
+        .slide-wrap div {
+            font-size: 30px;
+            line-height: 250px;
+            text-align: center;
+            background-color: #19bbff;
+            color: #fff;
+        }
+        .btn {
+            display: flex;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+        .btn div {
+            padding: 0 5px;
+            box-shadow: 2px 2px 2px #888;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: #19bbff;
+            color: #fff;
+            border-radius: 5px;
+        }
+    </style>
+    <!-- debug script Replace your own IP address -->
+    <!--<script src='http://10.216.97.168:6789/target/target-script-min.js#anonymous'></script>-->
+</head>
+<body>
+
+<div id="box">
+    <div class="slide-wrap">
+        <div>one</div>
+        <div>two</div>
+        <div>three</div>
+    </div>
+</div>
+
+<div class="btn">
+    <div>Prev</div>
+    <div>Next</div>
+</div>
+
+<div class="btn">
+    <div>Slide to 3</div>
+    <div>Switch to 3</div>
+</div>
+
+<div class="btn">
+    <div>Current index</div>
+    <div>Slide number</div>
+</div>
+
+<div class="btn">
+    <div>Refresh</div>
+    <div>Refresh force</div>
+</div>
+
+
+<script src="../dist/finger-mover.js"></script>
+<script src="../src/plugins/fmover-slide-y/dist/fmover-slide-y.js"></script>
+<script>
+    var fm = new Fmover({
+        el: '.slide-wrap',
+        plugins: [
+            fmoverSlideY({
+                startSlide: 1,
+                autoplay: 2000,
+                autoplayDir: 'top',
+                loop: true,
+                times: 500,
+                bounce: true,
+                touchable: true,
+                onInit: function () {
+                    console.log('Initialization is complete')
+                },
+                onTouchStart: function (currentY) {
+                    // console.log(currentY)
+                },
+                onTouchMove: function (currentY) {
+                    // console.log(currentY)
+                },
+                onTouchEnd: function () {
+                    // console.log('touch end')
+                },
+                onTransStart: function (currentY) {
+                    // console.log(currentY)
+                },
+                onTransMove: function (currentY) {
+                    // console.log(currentY)
+                },
+                onTransEnd: function (currentY) {
+                    // console.log(currentY)
+                },
+                onChangeStart: function (index, dir) {
+                    // console.log(index)
+                    // console.log(dir)
+                },
+                onChange: function (currentY) {
+                    // console.log(currentY)
+                },
+                onChangeEnd: function (currentY) {
+                    // console.log(currentY)
+                },
+                onRefresh: function (slideNumber) {
+                    // console.log(slideNumber)
+                }
+            })
+        ]
+    })
+    
+    var i = 0
+    var btns = document.querySelectorAll('.btn div')
+    btns[0].addEventListener('touchstart', function () {
+        fm[0].prev()
+    }, false)
+    btns[1].addEventListener('touchstart', function () {
+        fm[0].next()
+    }, false)
+    btns[2].addEventListener('touchstart', function () {
+        fm[0].slideTo(3, 3000)
+    }, false)
+    btns[3].addEventListener('touchstart', function () {
+        fm[0].slideTo(3, 0)
+    }, false)
+    btns[4].addEventListener('touchstart', function () {
+        alert(fm[0].slideIndex)
+    }, false)
+    btns[5].addEventListener('touchstart', function () {
+        alert(fm[0].slideNumber)
+    }, false)
+    btns[6].addEventListener('touchstart', function () {
+        i++
+        var div = document.createElement('div')
+        var parent = document.querySelector('.slide-wrap')
+        div.innerHTML = 'new slide' + i
+        parent.appendChild(div)
+
+        fm[0].refresh()
+    }, false)
+
+    btns[7].addEventListener('touchstart', function () {
+        i++
+        var div = document.createElement('div')
+        var parent = document.querySelector('.slide-wrap')
+        div.innerHTML = 'new slide' + i
+        parent.appendChild(div)
+
+        fm[0].refresh(true)
+    }, false)
+
+
+</script>
+
+</body>
+</html>

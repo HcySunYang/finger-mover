@@ -1,0 +1,22 @@
+{
+  "name": "fmover-slide-y",
+  "version": "0.0.24",
+  "description": "",
+  "main": "dist/fmover-slide-y.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "plugin",
+    "slide",
+    "swiper",
+    "finger-mover"
+  ],
+  "author": "HcySunYang",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": ""
+}

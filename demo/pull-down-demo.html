@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>pull down demo</title>
+    <style>
+        body {
+            background-color: #ccc;
+        }
+        #box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        #scroll-box {
+            background: #19bbff;
+        }
+        #scroll-box p {
+            margin: 0;
+            height: 40px;
+            line-height: 40px;
+            text-indent: 20px;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .pull-down-dom {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -50px;
+        }
+    </style>
+    <!-- debug script Replace your own IP address -->
+    <script src='http://10.216.96.119:6789/target/target-script-min.js#anonymous'></script>
+</head>
+<body>
+
+<div id="box">
+    <div id="scroll-box">
+        <div class="pull-down-dom">Pull down to refresh</div>
+
+        <div class="content"></div>
+    </div>
+</div>
+
+<script src="../dist/finger-mover.js"></script>
+<script src="../src/plugins/simulation-scroll-y/dist/simulation-scroll-y.js"></script>
+<script>
+    function createTxt (i) {
+        var str = ''
+        for (var k = 0; k < 100; k++) {
+            str += i + '----'
+        }
+        return str
+    }
+
+    var content = document.querySelector('.content')
+    for (var i = 0; i < 100; i++) {
+        var p = document.createElement('p')
+        p.innerHTML = createTxt(i)
+        content.appendChild(p)
+    }
+
+</script>
+<script>
+    var pullDownDom = document.querySelector('.pull-down-dom')
+    var fm = new Fmover({
+        el: '#scroll-box',
+        plugins: [
+            simulationScrollY({
+                pullDown: {
+                    use: true,
+                    distance: 50,
+                    onBegin: function (currentY) {
+                        var proportion = parseInt(currentY / 50 * 100)
+
+                        if (proportion >= 100) {
+                            proportion = 100
+                            pullDownDom.innerHTML = 'Release and load'
+                        } else {
+                            pullDownDom.innerHTML = proportion + '%'
+                        }
+
+                    },
+                    onActive: function () {
+                        var that = this
+                        pullDownDom.innerHTML = 'Loading...'
+                        
+                        setTimeout(function () {
+                            that.refresh(function () {
+                                pullDownDom.innerHTML = 'Pull down to refresh'
+                            })
+                        }, 2000)
+                    },
+                    onAfter: function (currentY) {
+                        if (currentY < 50) {
+                            pullDownDom.innerHTML = 'Pull down to refresh'
+                        }
+                    }
+                }
+            })
+        ]
+    })
+</script>
+
+</body>
+</html>

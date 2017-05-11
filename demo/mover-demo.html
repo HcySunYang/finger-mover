@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Moved Demo</title>
+    <style>
+        #box {
+            height: 50px;
+            width: 50px;
+            background-color: #19bbff;
+        }
+        .btn {
+            height: 30px;
+            margin-bottom: 20px;
+        }
+        .btn span{
+            float: left;
+            height: 30px;
+            width: 70px;
+            line-height: 30px;
+            text-align: center;
+            background-color: green;
+            color: #fff;
+            margin-right: 10px;
+        }
+        .pos {
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+        }
+    </style>
+    
+    <!-- debug script Replace your own IP address -->
+    <!-- <script src='http://10.216.96.119:6789/target/target-script-min.js#anonymous'></script> -->
+</head>
+<body>
+    <div class="btn">
+        <span>Start</span>
+        <span>Stop</span>
+        <span>Reset</span>
+    </div>
+    <div class="pos"></div>
+    <div class="pos"></div>
+    <div class="pos"></div>
+    <div class="pos"></div>
+    <div class="pos"></div>
+    <div class="pos"></div>
+    <div class="pos"></div>
+    <div id="box"></div>
+
+<script src="../src/moved/dist/moved.js"></script>
+<script>
+    var btns = document.querySelectorAll('.btn span')
+    var pos = document.querySelectorAll('.pos')
+    var start = btns[0]
+    var stop = btns[1]
+    var reset = btns[2]
+    var box = document.querySelector('#box')
+
+    var moved = new Moved()
+    
+    start.addEventListener('click', function () {
+        moved.start({
+            el: box,
+            target: {
+                translateX: 100,
+                translateY: 100,
+                rotateZ: 180,
+                skewX: 180,
+                scaleX: 2,
+                scaleY: 2,
+            },
+            time: 2000,
+            inCallBack: function (currentPos) {
+                pos[0].innerHTML = 'moving'
+                pos[1].innerHTML = 'translateX: ' + currentPos.translateX
+                pos[2].innerHTML = 'translateY: ' + currentPos.translateY
+                pos[3].innerHTML = 'rotateZ: ' + currentPos.rotateZ
+                pos[4].innerHTML = 'skewX: ' + currentPos.skewX
+                pos[5].innerHTML = 'scaleX: ' + currentPos.scaleX
+                pos[6].innerHTML = 'scaleY: ' + currentPos.scaleY
+            },
+            endCallBack: function (currentPos) {
+                pos[0].innerHTML = 'end'
+                pos[1].innerHTML = 'translateX: ' + currentPos.translateX
+                pos[2].innerHTML = 'translateY: ' + currentPos.translateY
+                pos[3].innerHTML = 'rotateZ: ' + currentPos.rotateZ
+                pos[4].innerHTML = 'skewX: ' + currentPos.skewX
+                pos[5].innerHTML = 'scaleX: ' + currentPos.scaleX
+                pos[6].innerHTML = 'scaleY: ' + currentPos.scaleY
+            }
+        })
+        setTimeout(() => {
+            moved.stop()
+        }, 200)
+        
+    }, false)
+
+    stop.addEventListener('click', function () {
+        moved.stop(function (currentPos) {
+            pos[0].innerHTML = 'stop'
+            pos[1].innerHTML = 'translateX: ' + currentPos.translateX
+            pos[2].innerHTML = 'translateY: ' + currentPos.translateY
+            pos[3].innerHTML = 'rotateZ: ' + currentPos.rotateZ
+            pos[4].innerHTML = 'skewX: ' + currentPos.skewX
+            pos[5].innerHTML = 'scaleX: ' + currentPos.scaleX
+            pos[6].innerHTML = 'scaleY: ' + currentPos.scaleY
+        })
+    }, false)
+
+    reset.addEventListener('click', function () {
+        moved.transform(box, 'translateX', 0)
+        moved.transform(box, 'translateY', 0)
+        moved.transform(box, 'rotateZ', 0)
+        moved.transform(box, 'skewX', 0)
+        moved.transform(box, 'rotateZ', 0)
+        moved.transform(box, 'scaleX', 1)
+        moved.transform(box, 'scaleY', 1)
+    })
+
+
+</script>
+
+</body>
+</html>

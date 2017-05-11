@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Demo</title>
+    <style>
+        body {
+            background-color: #ccc;
+        }
+        #box {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            bottom: 50px;
+            border: 10px solid #000;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        #scroll-box {
+            background: #19bbff;
+            /*width: 3000px;*/
+        }
+        #scroll-box p {
+            margin: 0;
+            height: 40px;
+            line-height: 40px;
+            text-indent: 20px;
+            color: #fff;
+            white-space: nowrap;
+        }
+        #red-box {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+    </style>
+
+    <style>
+        .pull-down-dom {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -50px;
+        }
+        .load-more {
+            background-color: #fff;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+    </style>
+    <!-- debug script Replace your own IP address -->
+    <!-- <script src='http://192.168.31.174:6789/target/target-script-min.js#anonymous'></script> -->
+</head>
+<body>
+<p></p>
+<div id="box">
+    <div id="scroll-box">
+        <div class="pull-down-dom">Pull down to refresh</div>
+
+        <div class="content"></div>
+
+        <div class="load-more">Load more</div>
+    </div>
+</div>
+<!-- <div id="red-box"></div> -->
+
+<script src="../dist/finger-mover.js"></script>
+<script src="../src/plugins/simulation-scroll-x/dist/simulation-scroll-x.js"></script>
+<script src="../src/plugins/simulation-scroll-y/dist/simulation-scroll-y.js"></script>
+<script>
+    function createTxt (i) {
+        var str = ''
+        for (var k = 0; k < 100; k++) {
+            str += i + '----'
+        }
+        return str
+    }
+
+    var content = document.querySelector('.content')
+    for (var i = 0; i < 100; i++) {
+        var p = document.createElement('p')
+        p.innerHTML = createTxt(i)
+        content.appendChild(p)
+    }
+
+</script>
+<script>
+    var pullDownDom = document.querySelector('.pull-down-dom')
+    var loadMoreDom = document.querySelector('.load-more')
+    var fm = new Fmover({
+        el: '#scroll-box',
+        plugins: [
+            // simulationScrollX(),
+            simulationScrollY({
+                scrollBar: true,
+                bounce: true,
+                pullDown: {
+                    use: true,
+                    distance: 50,
+                    onBegin: function (currentY) {
+                        var proportion = parseInt(currentY / 50 * 100)
+
+                        if (proportion >= 100) {
+                            proportion = 100
+                            pullDownDom.innerHTML = 'Release and load'
+                        } else {
+                            pullDownDom.innerHTML = proportion + '%'
+                        }
+
+                    },
+                    onActive: function () {
+                        var that = this
+                        pullDownDom.innerHTML = 'Loading...'
+                        
+                        setTimeout(function () {
+                            that.refresh(function () {
+                                pullDownDom.innerHTML = 'Pull down to refresh'
+                            })
+                        }, 2000)
+                    },
+                    onAfter: function (currentY) {
+                        if (currentY < 50) {
+                            pullDownDom.innerHTML = 'Pull down to refresh'
+                        }
+                    }
+                },
+                loadMore: {
+                    distance: 50,
+                    onLoadMore: function () {
+                        var that = this
+                        
+                        loadMoreDom.innerHTML = 'Loading...'
+                        setTimeout(function () {
+                            loadMoreDom.innerHTML = 'Load more'
+                            that.loadEnd()
+                        }, 2000)
+                    }
+
+                },
+                onTouchMove: function (currentY) {
+                    
+                },
+                onTransMove: function (currentY) {
+                    
+                },
+                onTransMoveEnd: function (currentY) {
+
+                }
+            })
+        ]
+    })
+    // fm[0].scrollTo(-1000, 1000)
+    // fm[1].scrollTo(-1000, 1000)
+    // setTimeout(function () {
+    //     for (var k = 100; k < 200; k++) {
+    //         var pp = document.createElement('p')
+    //         pp.innerHTML = createTxt(k)
+    //         content.appendChild(pp)
+    //     }
+    //     fm[0].refreshSize()
+    // }, 3000)
+    // setTimeout(function () {
+    //     scrollBox.style.width = '4000px'
+    //     fm[0].refreshSize()
+    // }, 1000)
+
+</script>
+
+</body>
+</html>

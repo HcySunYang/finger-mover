@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Moved Demo</title>
+    <style>
+        #box {
+            height: 50px;
+            width: 50px;
+            background-color: #19bbff;
+        }
+    </style>
+    
+    <!-- debug script Replace your own IP address -->
+    <!-- <script src='http://10.216.96.119:6789/target/target-script-min.js#anonymous'></script> -->
+</head>
+<body>
+
+    <div id="box"></div>
+
+<script src="../src/moved/dist/moved.js"></script>
+<script>
+
+    var box = document.querySelector('#box')
+
+    var moved = new Moved()
+    moved.start({
+        el: box,
+        target: {
+            translateX: 200,
+            translateY: 200,
+        },
+        time: 2000
+    })
+
+
+</script>
+
+</body>
+</html>

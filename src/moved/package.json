@@ -1,0 +1,21 @@
+{
+  "name": "moved",
+  "version": "0.0.24",
+  "description": "Miniature motion solutions",
+  "main": "dist/moved.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "move",
+    "moved",
+    "Animation"
+  ],
+  "author": "HcySunYang",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": ""
+}

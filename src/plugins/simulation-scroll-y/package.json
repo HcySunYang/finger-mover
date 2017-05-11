@@ -1,0 +1,21 @@
+{
+  "name": "simulation-scroll-y",
+  "version": "0.0.24",
+  "description": "",
+  "main": "dist/simulation-scroll-y.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "scroll",
+    "simulation",
+    "finger-mover"
+  ],
+  "author": "HcySunYang",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": ""
+}

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>fingerNumber Demo</title>
+    <style>
+        #box {
+            position: absolute;
+            top: 50px;
+            bottom: 50px;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background-color: #19bbff;
+            display: flex;
+            display: -webkit-box;
+            box-pack: center;
+            -webkit-box-pack: center;
+            box-align: center;
+            -webkit-box-align: center;
+            font-size: 20px;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+        }
+    </style>
+    
+    <!-- debug script Replace your own IP address -->
+    <!--<script src='http://10.216.96.119:6789/target/target-script-min.js#anonymous'></script>-->
+</head>
+<body>
+
+    <div id="box">
+        Touch and slide out of the blue area, observe the difference between native event.touches.length and fingerNumber<br/>
+        (译：手持触摸蓝色区域，并划出蓝色区域，观察原生 event.touches.length 与 fingerNumber 的区别)
+        <p></p>
+        <p></p>
+    </div>
+    
+
+<script src="../src/fingerd/dist/fingerd.js"></script>
+<script>
+    
+    var box = document.querySelector('#box')
+    var fg = new Fingerd({
+        element: box
+    })
+
+    box.addEventListener('touchstart', function (event) {
+        fg.injectEvent(event)
+        console.log('start')
+        event.preventDefault()
+    }, false)
+
+    box.addEventListener('touchmove', function (event) {
+        fg.injectEvent(event)
+
+        var ps = document.querySelectorAll('p')
+        ps[0].innerHTML = 'event.touchs.length: ' + event.touches.length
+        ps[1].innerHTML = 'fg.fingerNumber: ' + fg.fingerNumber
+
+        event.preventDefault()
+    }, false)
+
+    box.addEventListener('touchend', function (event) {
+        fg.injectEvent(event)
+        event.preventDefault()
+    }, false)
+
+    box.addEventListener('touchcancel', function (event) {
+        fg.injectEvent(event)
+        event.preventDefault()
+    }, false)
+
+
+</script>
+
+</body>
+</html>
