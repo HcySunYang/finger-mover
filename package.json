@@ -1,6 +1,6 @@
 {
   "name": "finger-mover",
-  "version": "0.0.24",
+  "version": "1.0.0",
   "description": "This is a flexible and plug-in scroll component implemented with JavaScript",
   "main": "dist/finger-mover.js",
   "keywords": [
