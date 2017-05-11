@@ -11,7 +11,7 @@
 
 ## Intro
 
-`finger-mover` is a sports effect library that integrates
+`finger-mover` is a motion effect library that integrates
 [Fingerd (a development kit for finger unit event management in mobile development)](https://fmover.hcysun.me/#/package/fingerd)
 and
 [Moved (a micro movement framework)](https://fmover.hcysun.me/#/package/moved). `finger-mover` provides many useful plugins, such as [Vertical scroll simulation (simulation-scroll-y.js)](https://fmover.hcysun.me/#/plugins/simulation-scroll-x), [Horizontal scroll simulation (simulation-scroll-x.js)](https://fmover.hcysun.me/#/plugins/simulation-scroll-x) and so on.
