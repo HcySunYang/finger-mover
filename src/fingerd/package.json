@@ -1,6 +1,6 @@
 {
   "name": "fingerd",
-  "version": "0.0.24",
+  "version": "1.0.0",
   "description": "The event management scheme of the mobile end is based on the finger",
   "main": "dist/fingerd.js",
   "repository": {

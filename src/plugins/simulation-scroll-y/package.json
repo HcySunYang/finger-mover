@@ -1,6 +1,6 @@
 {
   "name": "simulation-scroll-y",
-  "version": "0.0.24",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/simulation-scroll-y.js",
   "repository": {
