@@ -14,7 +14,7 @@
 `finger-mover` is a motion effect library that integrates
 [Fingerd (a development kit for finger unit event management in mobile development)](https://fmover.hcysun.me/#/package/fingerd)
 and
-[Moved (a micro movement framework)](https://fmover.hcysun.me/#/package/moved). `finger-mover` provides many useful plugins, such as [Vertical scroll simulation (simulation-scroll-y.js)](https://fmover.hcysun.me/#/plugins/simulation-scroll-x), [Horizontal scroll simulation (simulation-scroll-x.js)](https://fmover.hcysun.me/#/plugins/simulation-scroll-x) and so on.
+[Moved (a micro movement framework)](https://fmover.hcysun.me/#/package/moved). `finger-mover` provides many useful plugins, such as [Vertical scroll simulation (simulation-scroll-y.js)](https://fmover.hcysun.me/#/plugins/simulation-scroll-y), [Horizontal scroll simulation (simulation-scroll-x.js)](https://fmover.hcysun.me/#/plugins/simulation-scroll-x) and so on.
 
 ## Docs
 
@@ -74,6 +74,10 @@ let fm = new Fmover({
 ## Contribution
 
 Contributions are welcome! Open a pull request to fix a bug, or open an issue to discuss a new feature or change.
+
+## Credits
+
+Thanks [Ri Xu](https://xuri.me) provides web hosting service and doc translation.
 
 ## License
 
