@@ -1,11 +1,11 @@
 {
   "name": "fmover-slide-y",
   "version": "1.0.0",
-  "description": "",
+  "description": "finger-mover vertical slideshow plugin",
   "main": "dist/fmover-slide-y.js",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/HcySunYang/finger-mover.git"
   },
   "keywords": [
     "plugin",
@@ -16,7 +16,7 @@
   "author": "HcySunYang",
   "license": "MIT",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/HcySunYang/finger-mover/issues"
   },
-  "homepage": ""
+  "homepage": "https://github.com/HcySunYang/finger-mover/blob/master/src/plugins/fmover-slide-y/README.md"
 }
