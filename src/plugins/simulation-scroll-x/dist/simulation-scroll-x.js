@@ -1,5 +1,5 @@
 /*!
- * simulation-scroll-x.js v0.0.24
+ * simulation-scroll-x.js v1.0.0
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */
