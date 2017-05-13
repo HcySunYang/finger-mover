@@ -3,7 +3,7 @@
 
 <p align="center">
 <a href="https://www.npmjs.com/package/finger-mover"><img src="https://img.shields.io/npm/v/finger-mover.svg"/></a>
-<!--<a href="https://www.npmjs.com/package/finger-mover"><img src="https://img.shields.io/npm/dt/finger-mover.svg"/></a>-->
+<a href="https://www.npmjs.com/package/finger-mover"><img src="https://img.shields.io/npm/dt/finger-mover.svg"/></a>
 <a href="https://www.npmjs.com/package/finger-mover"><img src="https://img.shields.io/npm/l/finger-mover.svg"/></a>
 <a href="https://circleci.com/gh/HcySunYang/finger-mover/tree/dev"><img src="https://img.shields.io/circleci/project/HcySunYang/finger-mover/dev.svg"/></a>
 <a href="https://codecov.io/github/HcySunYang/finger-mover?branch=dev"><img src="https://img.shields.io/codecov/c/github/HcySunYang/finger-mover/dev.svg"/></a>
