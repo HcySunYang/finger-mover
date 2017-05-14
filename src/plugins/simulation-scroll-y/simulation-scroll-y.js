@@ -121,7 +121,7 @@ export default function (options) {
                 }
                 let parentPosition = getStyle(wrapEl, 'position')
                 if (parentPosition === 'static') {
-                    cssText(parent, 'position: relative;')
+                    cssText(wrapEl, 'position: relative;')
                 }
                 this.refreshSize()
             },
