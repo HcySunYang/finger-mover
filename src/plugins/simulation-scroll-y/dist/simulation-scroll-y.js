@@ -1,5 +1,5 @@
 /*!
- * simulation-scroll-y.js v1.0.0
+ * simulation-scroll-y.js v1.0.1
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */
@@ -119,7 +119,7 @@ var simulationScrollY = function (options) {
                 }
                 var parentPosition = getStyle(wrapEl, 'position');
                 if (parentPosition === 'static') {
-                    cssText(parent, 'position: relative;');
+                    cssText(wrapEl, 'position: relative;');
                 }
                 this.refreshSize();
             },
