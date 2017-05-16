@@ -110,7 +110,7 @@ export default function (options) {
             scrollBarDom.style.height = `${barRealHeight}px`
             moved.transform(scrollBarDom, 'translateY', scrollBarTarget)
         }
-        
+
         return {
             init (fmover) {
                 el = fmover.el

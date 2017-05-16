@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>slide with scroll demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #box {
+            height: 550px;
+        }
+        .slide-wrap div {
+            background-color: #ccc;
+            color: #fff;
+        }
+        .content {
+            background-color: #19bbff;
+            overflow: hidden;
+        }
+        .content p{
+            white-space: nowrap;
+            height: 40px;
+            line-height: 40px;
+            text-indent: 20px;
+        }
+    </style>
+    <!-- debug script Replace your own IP address -->
+    <!--<script src='http://10.216.97.168:6789/target/target-script-min.js#anonymous'></script>-->
+</head>
+<body>
+
+<div id="box">
+    <div class="slide-wrap">
+        <div>
+            <section id="scroll-box">
+                <section class="content"></section>
+            </section>
+        </div>
+        <div></div>
+    </div>
+</div>
+
+
+<script src="../dist/finger-mover.js"></script>
+<script src="../src/plugins/fmover-slide-x/dist/fmover-slide-x.js"></script>
+<script src="../src/plugins/simulation-scroll-y/dist/simulation-scroll-y.js"></script>
+<script>
+    function createTxt (i) {
+        var str = ''
+        for (var k = 0; k < 100; k++) {
+            str += i + '----'
+        }
+        return str
+    }
+
+    var content = document.querySelector('.content')
+    for (var i = 0; i < 100; i++) {
+        var p = document.createElement('p')
+        p.innerHTML = createTxt(i)
+        content.appendChild(p)
+    }
+
+</script>
+<script>
+    var slideFm = new Fmover({
+        el: '.slide-wrap',
+        plugins: [
+            fmoverSlideX({
+                loop: false
+            })
+        ]
+    })
+
+    var scrollFm = new Fmover({
+        el: '#scroll-box',
+        plugins: [
+            simulationScrollY()
+        ]
+    })
+
+
+</script>
+
+</body>
+</html>
