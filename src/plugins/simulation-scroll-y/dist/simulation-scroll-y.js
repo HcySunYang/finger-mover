@@ -26,6 +26,7 @@ var simulationScrollY = function (options) {
         var opa = extend({
             scrollBar: true,
             bounce: true,
+            unidirectional: false,
             pullDown: {
                 use: false,
                 distance: 50,
@@ -72,9 +73,12 @@ var simulationScrollY = function (options) {
             lockPullDown = false,
             lockLoadmore = false,
             isMoving = false,
+            moveStatusForStart = false,
             refreshDirty = false,
             refreshCallBack = noop,
-            moveDirection = {};
+            moveDirection = {},
+            horizontal = false,
+            vertical = false;
 
         function createScrollBar (parent, height) {
             if (scrollBarDom) {
@@ -82,7 +86,7 @@ var simulationScrollY = function (options) {
                 return
             }
             scrollBarDom = document.createElement('span');
-            cssText(scrollBarDom, ("\n                position: absolute;\n                top:0;\n                right: 3px;\n                width: 3px; \n                height: " + height + "px; \n                background-color: #000;\n                opacity: 0;\n                border-radius: 1.5px;\n                transition: opacity .2s;\n                -webkit-transition: opacity .2s;\n            "));
+            cssText(scrollBarDom, ("\n                position: absolute;\n                z-index: 10000000;\n                top:0;\n                right: 3px;\n                width: 3px; \n                height: " + height + "px; \n                background-color: #000;\n                border-radius: 1.5px;\n                transition: opacity .2s;\n                -webkit-transition: opacity .2s;\n                transform: translateZ(0.01px);\n                opacity: 0;\n            "));
             parent.appendChild(scrollBarDom);
         }
         function moveScrollBar (target) {
@@ -107,6 +111,8 @@ var simulationScrollY = function (options) {
             var barRealHeight = scrollBarSize - shorten;
             scrollBarDom.style.height = barRealHeight + "px";
             moved.transform(scrollBarDom, 'translateY', scrollBarTarget);
+            // Enables the z-index attribute to take effect
+            moved.transform(scrollBarDom, 'translateZ', 0.01);
         }
 
         return {
@@ -115,7 +121,7 @@ var simulationScrollY = function (options) {
                 wrapEl = el.parentNode;
                 var elPosition = getStyle(el, 'position');
                 if (elPosition === 'static') {
-                    cssText(el, 'position: relative;');
+                    cssText(el, 'position: relative; z-index: 10;');
                 }
                 var parentPosition = getStyle(wrapEl, 'position');
                 if (parentPosition === 'static') {
@@ -126,10 +132,12 @@ var simulationScrollY = function (options) {
             start: function start (fingerd) {
                 var tev = fingerd.fingers[0];
                 moveType = 'easeOutStrong';
-                borderBounce = false;
                 isMoveOut = false;
+                moveStatusForStart = moved.moveStatus === 'stop' ? false : true;
                 isTriggerOnActive = false;
                 isTriggerOnAfter = false;
+                horizontal = false;
+                vertical = false;
                 moveDirection = {};
 
                 if (currentY > downLimit) {
@@ -147,9 +155,7 @@ var simulationScrollY = function (options) {
                 isMoving = true;
                 var tev = fingerd.fingers[0],
                     fingerInElement = tev.fingerInElement;
-
-                moveDirection = tev.direction;
-                moveTarget = currentY + tev.distanceY;
+                
                 if (!fingerInElement) {
                     if (!isMoveOut) {
                         isMoveOut = true;
@@ -157,35 +163,64 @@ var simulationScrollY = function (options) {
                     }
                     return false
                 }
-                if (moveTarget > downLimit || upLimit > 0) {
-                    moveTarget = opa.bounce ? downLimit + (moveTarget - downLimit) * wearDistance : downLimit;
-                } else if (moveTarget < upLimit) {
-                    moveTarget = opa.bounce ? (upLimit + (moveTarget - upLimit) * wearDistance) : upLimit;
-                }
 
-                if (moveTarget <= loadMorePoint &&
-                    !lockLoadmore &&
-                    moveDirection.top) {
-
-                    lockLoadmore = true;
-                    opa.loadMore.onLoadMore.call(this);
+                moveDirection = tev.direction;
+                if ((moveDirection.top || moveDirection.bottom) &&
+                    !horizontal &&
+                    Math.abs(tev.distanceY) >= 10) {
+                    vertical = true;
                 }
-                moved.transform(tev.el, 'translateY', moveTarget);
-                if (opa.scrollBar) {
-                    cssText(scrollBarDom, 'opacity: .4;');
-                    moveScrollBar(-(moveTarget * proportion));
+                if ((moveDirection.left || moveDirection.right) &&
+                    !vertical &&
+                    Math.abs(tev.distanceX) >= 10) {
+                    horizontal = true;
                 }
-                if (opa.pullDown &&
-                    opa.pullDown.use &&
-                    moveTarget > 0 &&
-                    !lockPullDown) {
-                    opa.pullDown.onBegin && opa.pullDown.onBegin.call(this, moveTarget);
-                }
-
-                opa.onTouchMove.call(this, moveTarget);
                 
+                if (Math.abs(tev.distanceY) < 10 && Math.abs(tev.distanceX) < 10) {
+                    return false
+                }
+                if (vertical || !opa.unidirectional) {
+                    var disy = tev.distanceY > 0
+                                ? tev.distanceY - 10
+                                : tev.distanceY + 10;
+                    moveTarget = currentY + disy;
+                    
+                    if (moveTarget > downLimit || upLimit > 0) {
+                        moveTarget = opa.bounce ? downLimit + (moveTarget - downLimit) * wearDistance : downLimit;
+                    } else if (moveTarget < upLimit) {
+                        moveTarget = opa.bounce ? (upLimit + (moveTarget - upLimit) * wearDistance) : upLimit;
+                    }
+
+                    if (moveTarget <= loadMorePoint &&
+                        !lockLoadmore &&
+                        moveDirection.top) {
+
+                        lockLoadmore = true;
+                        opa.loadMore.onLoadMore.call(this);
+                    }
+                    moved.transform(tev.el, 'translateY', moveTarget);
+                    if (opa.scrollBar) {
+                        cssText(scrollBarDom, 'opacity: .4;');
+                        moveScrollBar(-(moveTarget * proportion));
+                    }
+                    if (opa.pullDown &&
+                        opa.pullDown.use &&
+                        moveTarget > 0 &&
+                        !lockPullDown) {
+                        opa.pullDown.onBegin && opa.pullDown.onBegin.call(this, moveTarget);
+                    }
+
+                    opa.onTouchMove.call(this, moveTarget);
+                }
+
+                if (vertical && opa.unidirectional || moveStatusForStart) {
+                    return false
+                }
             },
             end: function end (fingerd) {
+                if (horizontal && !borderBounce) {
+                    return false
+                }
                 var tev = fingerd.fingers[0],
                     changeFingerIndex = fingerd.changeFingerIndex,
                     fingerNumber = fingerd.fingerNumber,
@@ -205,7 +240,7 @@ var simulationScrollY = function (options) {
                     changeFingerIndex = fingerd.changeFingerIndex,
                     fingerNumber = fingerd.fingerNumber,
                     fingerInElement = tev.fingerInElement;
-
+                    
                 if (changeFingerIndex === 0 && fingerNumber === 0 && fingerInElement) {
                     currentY = currentY + tev.distanceY;
                 }
@@ -337,6 +372,8 @@ var simulationScrollY = function (options) {
                             cssText(scrollBarDom, 'opacity: 0;');
                         }
                         opa.onTransMoveEnd.call(this, currentY);
+                        moveStatusForStart = false;
+                        borderBounce = false;
                     }
                 });
             },

@@ -127,7 +127,7 @@ var fmoverSlideX = function (options) {
                     }
                 }
                 moved.transform(el, 'translateX', target);
-                opa.onTouchMove.call(this, target);
+                opa.onTouchMove.call(this, target, slideWidth, this.slideNumber);
             },
             end: function end (fingerd) {
                 var fg = fingerd.fingers[0];
@@ -290,7 +290,7 @@ var fmoverSlideX = function (options) {
                         translateX: current
                     },
                     inCallBack: function (currentPos) {
-                        opa.onTransMove.call(that, currentPos.translateX);
+                        opa.onTransMove.call(that, currentPos.translateX, slideWidth, that.slideNumber);
                         if (isChange) {
                             opa.onChange.call(that, currentPos.translateX);
                         }

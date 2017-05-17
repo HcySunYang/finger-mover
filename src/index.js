@@ -88,12 +88,15 @@ export default class Fmover {
     /* istanbul ignore next */
     _move (event) {
         const F = this.fingerd.injectEvent(event)
-
+        let returnVal
         let pluginStorLen = this.pluginsStorage.length
         for (let i = 0; i < pluginStorLen; i++) {
-            this.pluginsStorage[i].move && this.pluginsStorage[i].move(F)
+            returnVal = this.pluginsStorage[i].move && this.pluginsStorage[i].move(F)
         }
 
+        if (typeof returnVal !== 'undefined' && !returnVal) {
+            event.stopPropagation()
+        }
         event.preventDefault()
     }
     /* istanbul ignore next */

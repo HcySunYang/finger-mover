@@ -17,6 +17,7 @@ export default function (options) {
         let opa = extend({
             scrollBar: true,
             bounce: true,
+            unidirectional: false,
             pullDown: {
                 use: false,
                 distance: 50,
@@ -63,9 +64,12 @@ export default function (options) {
             lockPullDown = false,
             lockLoadmore = false,
             isMoving = false,
+            moveStatusForStart = false,
             refreshDirty = false,
             refreshCallBack = noop,
-            moveDirection = {}
+            moveDirection = {},
+            horizontal = false,
+            vertical = false
 
         function createScrollBar (parent, height) {
             if (scrollBarDom) {
@@ -75,15 +79,17 @@ export default function (options) {
             scrollBarDom = document.createElement('span')
             cssText(scrollBarDom, `
                 position: absolute;
+                z-index: 10000000;
                 top:0;
                 right: 3px;
                 width: 3px; 
                 height: ${height}px; 
                 background-color: #000;
-                opacity: 0;
                 border-radius: 1.5px;
                 transition: opacity .2s;
                 -webkit-transition: opacity .2s;
+                transform: translateZ(0.01px);
+                opacity: 0;
             `)
             parent.appendChild(scrollBarDom)
         }
@@ -109,6 +115,8 @@ export default function (options) {
             let barRealHeight = scrollBarSize - shorten
             scrollBarDom.style.height = `${barRealHeight}px`
             moved.transform(scrollBarDom, 'translateY', scrollBarTarget)
+            // Enables the z-index attribute to take effect
+            moved.transform(scrollBarDom, 'translateZ', 0.01)
         }
 
         return {
@@ -117,7 +125,7 @@ export default function (options) {
                 wrapEl = el.parentNode
                 let elPosition = getStyle(el, 'position')
                 if (elPosition === 'static') {
-                    cssText(el, 'position: relative;')
+                    cssText(el, 'position: relative; z-index: 10;')
                 }
                 let parentPosition = getStyle(wrapEl, 'position')
                 if (parentPosition === 'static') {
@@ -128,10 +136,12 @@ export default function (options) {
             start (fingerd) {
                 let tev = fingerd.fingers[0]
                 moveType = 'easeOutStrong'
-                borderBounce = false
                 isMoveOut = false
+                moveStatusForStart = moved.moveStatus === 'stop' ? false : true
                 isTriggerOnActive = false
                 isTriggerOnAfter = false
+                horizontal = false
+                vertical = false
                 moveDirection = {}
 
                 if (currentY > downLimit) {
@@ -149,9 +159,7 @@ export default function (options) {
                 isMoving = true
                 let tev = fingerd.fingers[0],
                     fingerInElement = tev.fingerInElement
-
-                moveDirection = tev.direction
-                moveTarget = currentY + tev.distanceY
+                
                 if (!fingerInElement) {
                     if (!isMoveOut) {
                         isMoveOut = true
@@ -159,35 +167,64 @@ export default function (options) {
                     }
                     return false
                 }
-                if (moveTarget > downLimit || upLimit > 0) {
-                    moveTarget = opa.bounce ? downLimit + (moveTarget - downLimit) * wearDistance : downLimit
-                } else if (moveTarget < upLimit) {
-                    moveTarget = opa.bounce ? (upLimit + (moveTarget - upLimit) * wearDistance) : upLimit
-                }
 
-                if (moveTarget <= loadMorePoint &&
-                    !lockLoadmore &&
-                    moveDirection.top) {
-
-                    lockLoadmore = true
-                    opa.loadMore.onLoadMore.call(this)
+                moveDirection = tev.direction
+                if ((moveDirection.top || moveDirection.bottom) &&
+                    !horizontal &&
+                    Math.abs(tev.distanceY) >= 10) {
+                    vertical = true
                 }
-                moved.transform(tev.el, 'translateY', moveTarget)
-                if (opa.scrollBar) {
-                    cssText(scrollBarDom, 'opacity: .4;')
-                    moveScrollBar(-(moveTarget * proportion))
+                if ((moveDirection.left || moveDirection.right) &&
+                    !vertical &&
+                    Math.abs(tev.distanceX) >= 10) {
+                    horizontal = true
                 }
-                if (opa.pullDown &&
-                    opa.pullDown.use &&
-                    moveTarget > 0 &&
-                    !lockPullDown) {
-                    opa.pullDown.onBegin && opa.pullDown.onBegin.call(this, moveTarget)
-                }
-
-                opa.onTouchMove.call(this, moveTarget)
                 
+                if (Math.abs(tev.distanceY) < 10 && Math.abs(tev.distanceX) < 10) {
+                    return false
+                }
+                if (vertical || !opa.unidirectional) {
+                    let disy = tev.distanceY > 0
+                                ? tev.distanceY - 10
+                                : tev.distanceY + 10
+                    moveTarget = currentY + disy
+                    
+                    if (moveTarget > downLimit || upLimit > 0) {
+                        moveTarget = opa.bounce ? downLimit + (moveTarget - downLimit) * wearDistance : downLimit
+                    } else if (moveTarget < upLimit) {
+                        moveTarget = opa.bounce ? (upLimit + (moveTarget - upLimit) * wearDistance) : upLimit
+                    }
+
+                    if (moveTarget <= loadMorePoint &&
+                        !lockLoadmore &&
+                        moveDirection.top) {
+
+                        lockLoadmore = true
+                        opa.loadMore.onLoadMore.call(this)
+                    }
+                    moved.transform(tev.el, 'translateY', moveTarget)
+                    if (opa.scrollBar) {
+                        cssText(scrollBarDom, 'opacity: .4;')
+                        moveScrollBar(-(moveTarget * proportion))
+                    }
+                    if (opa.pullDown &&
+                        opa.pullDown.use &&
+                        moveTarget > 0 &&
+                        !lockPullDown) {
+                        opa.pullDown.onBegin && opa.pullDown.onBegin.call(this, moveTarget)
+                    }
+
+                    opa.onTouchMove.call(this, moveTarget)
+                }
+
+                if (vertical && opa.unidirectional || moveStatusForStart) {
+                    return false
+                }
             },
             end (fingerd) {
+                if (horizontal && !borderBounce) {
+                    return false
+                }
                 let tev = fingerd.fingers[0],
                     changeFingerIndex = fingerd.changeFingerIndex,
                     fingerNumber = fingerd.fingerNumber,
@@ -207,7 +244,7 @@ export default function (options) {
                     changeFingerIndex = fingerd.changeFingerIndex,
                     fingerNumber = fingerd.fingerNumber,
                     fingerInElement = tev.fingerInElement
-
+                    
                 if (changeFingerIndex === 0 && fingerNumber === 0 && fingerInElement) {
                     currentY = currentY + tev.distanceY
                 }
@@ -339,6 +376,8 @@ export default function (options) {
                             cssText(scrollBarDom, 'opacity: 0;')
                         }
                         opa.onTransMoveEnd.call(this, currentY)
+                        moveStatusForStart = false
+                        borderBounce = false
                     }
                 })
             },

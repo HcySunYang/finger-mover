@@ -50,6 +50,7 @@ export default function (options) {
             scrollBarDom = document.createElement('span')
             cssText(scrollBarDom, `
                 position: absolute;
+                z-index: 10000000;
                 left:0;
                 bottom: 3px;
                 height: 3px; 
