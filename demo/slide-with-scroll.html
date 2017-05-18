@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>slide with scroll demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #box {
+            position: absolute;
+            top: 44px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+        }
+        .header {
+            position: relative;
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            overflow: hidden;
+        }
+        .header:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            transform: scaleY(0.5);
+            border-bottom: 1px solid #333;
+        }
+        .slide-wrap div {
+            background-color: #ccc;
+            color: #fff;
+        }
+        .content {
+            background-color: #19bbff;
+            overflow: hidden;
+        }
+        .content p{
+            white-space: nowrap;
+            height: 40px;
+            line-height: 40px;
+            text-indent: 20px;
+        }
+        .placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+        }
+        .bar {
+            position: absolute;
+            width: 33.3333%;
+            height: 3px;
+            background-color: #FF9900;
+            left: 0;
+            bottom: 0;
+        }
+    </style>
+    <!-- debug script Replace your own IP address -->
+    <!--<script src='http://10.216.97.137:6789/target/target-script-min.js#anonymous'></script>-->
+</head>
+<body>
+<div class="header">
+    <div>Food</div>
+    <div>Movie</div>
+    <div>Hotel</div>
+    <span class="bar"></span>
+</div>
+<div id="box">
+    <div class="slide-wrap">
+        <div>
+            <section id="scroll-box">
+                <section class="content"></section>
+            </section>
+        </div>
+        <div class="placeholder">Movie</div>
+        <div class="placeholder">Hotel</div>
+    </div>
+    <!--<section id="scroll-box">
+        <section class="content"></section>
+    </section>-->
+</div>
+
+
+<script src="../dist/finger-mover.js"></script>
+<script src="../src/plugins/fmover-slide-x/dist/fmover-slide-x.js"></script>
+<script src="../src/plugins/simulation-scroll-y/dist/simulation-scroll-y.js"></script>
+<script>
+    function createTxt (i) {
+        var str = ''
+        for (var k = 0; k < 100; k++) {
+            str += i + '----'
+        }
+        return str
+    }
+
+    var content = document.querySelector('.content')
+    for (var i = 0; i < 100; i++) {
+        var p = document.createElement('p')
+        p.innerHTML = createTxt(i)
+        content.appendChild(p)
+    }
+
+</script>
+<script>
+    var mv = new Fmover.Moved()
+    var bar = document.querySelector('.bar')
+    var headers = Array.prototype.slice.call(document.querySelectorAll('.header div'))
+    function moveBar (currentX, slideWidth, slideNumber) {
+        var percentage = currentX / (slideWidth * slideNumber)
+        var dis = slideWidth * percentage
+        mv.transform(bar, 'translateX', -dis)
+    }
+    var slideFm = new Fmover({
+        el: '.slide-wrap',
+        plugins: [
+            fmoverSlideX({
+                loop: false,
+                onTouchMove: moveBar,
+                onTransMove: moveBar
+            })
+        ]
+    })
+    var scrollFm = new Fmover({
+        el: '#scroll-box',
+        plugins: [
+            simulationScrollY({
+                unidirectional: true
+            })
+        ]
+    })
+    headers.forEach(function (o, i) {
+        o.addEventListener('touchend', function () {
+            console.log(i)
+            slideFm[0].slideTo(i + 1)
+        })
+    });
+
+
+</script>
+
+</body>
+</html>

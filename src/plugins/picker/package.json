@@ -1,0 +1,21 @@
+{
+  "name": "picker",
+  "version": "1.0.1",
+  "description": "javascript picker inspired by ios UIPickerView",
+  "main": "dist/picker.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HcySunYang/finger-mover.git"
+  },
+  "keywords": [
+    "plugin",
+    "picker",
+    "finger-mover"
+  ],
+  "author": "HcySunYang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HcySunYang/finger-mover/issues"
+  },
+  "homepage": "https://github.com/HcySunYang/finger-mover/blob/master/src/plugins/picker/README.md"
+}

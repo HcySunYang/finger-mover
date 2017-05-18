@@ -57,7 +57,7 @@ var simulationScrollX = function (options) {
                 return
             }
             scrollBarDom = document.createElement('span');
-            cssText(scrollBarDom, ("\n                position: absolute;\n                left:0;\n                bottom: 3px;\n                height: 3px; \n                width: " + width + "px; \n                background-color: #000;\n                opacity: 0;\n                border-radius: 1.5px;\n                transition: opacity .2s;\n                -webkit-transition: opacity .2s;\n            "));
+            cssText(scrollBarDom, ("\n                position: absolute;\n                z-index: 10000000;\n                left:0;\n                bottom: 3px;\n                height: 3px; \n                width: " + width + "px; \n                background-color: #000;\n                opacity: 0;\n                border-radius: 1.5px;\n                transition: opacity .2s;\n                -webkit-transition: opacity .2s;\n            "));
             var parentPosition = getStyle(parent, 'position');
             if (parentPosition === 'static') {
                 cssText(parent, 'position: relative;');
