@@ -64,7 +64,6 @@ export function is3DMatrix (el) {
     if (matrix === 'none') {
         return false
     }
-    console.log(matrix)
     let matrixArray = matrix.match(/[+-]?\d*[.]?\d+(?=,|\))/g)
     if (matrixArray.length > 6) {
         return true
