@@ -1,5 +1,5 @@
 /*!
- * finger-mover.js v1.0.1
+ * finger-mover.js v1.0.2
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */
@@ -76,7 +76,6 @@ function is3DMatrix (el) {
     if (matrix === 'none') {
         return false
     }
-    console.log(matrix);
     var matrixArray = matrix.match(/[+-]?\d*[.]?\d+(?=,|\))/g);
     if (matrixArray.length > 6) {
         return true
