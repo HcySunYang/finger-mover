@@ -117,7 +117,7 @@ export default function (options) {
                         target = opa.bounce ? (bottomLimit + (target - bottomLimit) * 0.5) : bottomLimit
                     }
                 }
-                console.log(target)
+                
                 moved.transform(el, 'translateY', target)
                 opa.onTouchMove.call(this, target)
             },
@@ -244,12 +244,17 @@ export default function (options) {
                 }, opa.autoplay)
             },
             wrapMove (fg) {
-                if ((fg.direction.top && Math.abs(fg.yv) > SPEED && fg.distanceY < 0) ||
-                    fg.distanceY < -slideHeight / 2) {
+                let forceStopTop = opa.loop || (!opa.loop && this.index !== slideNumber)
+                let forceStopBottom = opa.loop || (!opa.loop && this.index !== 1)
+                
+                if (forceStopTop &&
+                    (fg.direction.top && Math.abs(fg.yv) > SPEED && fg.distanceY < 0) ||
+                    (forceStopTop && fg.distanceY < -slideHeight / 2)) {
                     this.index++
                     this.onChangeStart(this.redressIndex(this.index), AUTOPLAY_DIR.top)
-                } else if ((fg.direction.bottom && Math.abs(fg.yv) > SPEED && fg.distanceY > 0) ||
-                            fg.distanceY > slideHeight / 2) {
+                } else if (forceStopBottom &&
+                            (fg.direction.bottom && Math.abs(fg.yv) > SPEED && fg.distanceY > 0) ||
+                            (forceStopBottom && fg.distanceY > slideHeight / 2)) {
                     this.index--
                     this.onChangeStart(this.redressIndex(this.index), AUTOPLAY_DIR.bottom)
                 }
