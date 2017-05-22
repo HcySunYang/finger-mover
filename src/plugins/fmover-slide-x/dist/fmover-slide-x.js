@@ -254,12 +254,17 @@ var fmoverSlideX = function (options) {
                 }, opa.autoplay);
             },
             wrapMove: function wrapMove (fg) {
-                if ((fg.direction.left && Math.abs(fg.xv) > SPEED && fg.distanceX < 0) ||
-                    fg.distanceX < -slideWidth / 2) {
+                var forceStopLeft = opa.loop || (!opa.loop && this.index !== slideNumber);
+                var forceStopRight = opa.loop || (!opa.loop && this.index !== 1);
+                
+                if (forceStopLeft &&
+                    (fg.direction.left && Math.abs(fg.xv) > SPEED && fg.distanceX < 0) ||
+                    (forceStopLeft && fg.distanceX < -slideWidth / 2)) {
                     this.index++;
                     this.onChangeStart(this.redressIndex(this.index), AUTOPLAY_DIR.left);
-                } else if ((fg.direction.right && Math.abs(fg.xv) > SPEED && fg.distanceX > 0) ||
-                            fg.distanceX > slideWidth / 2) {
+                } else if (forceStopRight &&
+                            (fg.direction.right && Math.abs(fg.xv) > SPEED && fg.distanceX > 0) ||
+                            (forceStopRight && fg.distanceX > slideWidth / 2)) {
                     this.index--;
                     this.onChangeStart(this.redressIndex(this.index), AUTOPLAY_DIR.right);
                 }
