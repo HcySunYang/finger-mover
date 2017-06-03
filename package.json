@@ -1,6 +1,6 @@
 {
   "name": "finger-mover",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "A motion effect library that integrates Fingerd and Moved",
   "main": "dist/finger-mover.js",
   "keywords": [
