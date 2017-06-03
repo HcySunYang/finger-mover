@@ -20,26 +20,43 @@ var fmoverSlideX = function (options) {
         var isInElement = Fmover.isInElement;
         var throwError = Fmover.throwError;
         var toArray = Fmover.toArray;
+        // 手指滑动速度阈值
         var SPEED = 0.5;
         var AUTOPLAY_DIR = {
             left: 'left',
             right: 'right'
         };
+            // 滚动元素
         var el = null,
+            // 滚动元素的父级，即包裹层
             parentEl = null,
+            // 一个数组，存储所有轮播块
             slideEls = null,
+            // 轮播块的数量，等价于 slideEls.length
             slideNumber = 0,
+            // 轮播块的数量，包含clone出来的轮播块
             realSlideNumber = 0,
+            // 每个轮播块的宽度
             slideWidth = 0,
+            // 滚动元素的宽度，即 el 的宽度
             elWidth = 0,
+            // 滚动元素的当前位置
             current = 0,
+            // 主要应用于move事件中，滚动元素的目标位置
             target = 0,
+            // Moved 实例
             moved = new Moved(),
+            // 左滚动限制
             leftLimit = 0,
+            // 右滚动限制
             rightLimit = 0,
+            // 手指是否滑动控制范围
             isMoveOut = false,
+            // 定时器
             timer = null,
+            // 是否锁定轮播
             lock = false,
+            // 是否触发切换
             isChange = false;
 
         var noop = function () {};
@@ -167,7 +184,7 @@ var fmoverSlideX = function (options) {
                 cloneNodes.forEach(function (o) {
                     o.parentNode.removeChild(o);
                 });
-                slideEls = Array.prototype.slice.call(el.querySelectorAll('div'));
+                slideEls = toArray(el.querySelectorAll('div'));
                 slideNumber = slideEls.length;
                 slideWidth = parseInt(getStyle(parentEl, 'width'));
                 this.index = force

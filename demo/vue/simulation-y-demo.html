@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title> Vue & simulation-scroll-y demo</title>
+    <style>
+        body {
+            background-color: #ccc;
+        }
+        #box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        #scroll-box {
+            background: #19bbff;
+        }
+        #scroll-box p {
+            margin: 0;
+            height: 40px;
+            line-height: 40px;
+            text-indent: 20px;
+            color: #fff;
+            white-space: nowrap;
+        }
+    </style>
+    <!-- debug script Replace your own IP address -->
+    <!--<script src='http://10.216.96.119:6789/target/target-script-min.js#anonymous'></script>-->
+</head>
+<body>
+
+<div id="box">
+    <div id="scroll-box">
+        <div class="content">
+            <p v-for="obj in list">{{obj.txt}}</p>
+        </div>
+    </div>
+</div>
+
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script src="../../dist/finger-mover.js"></script>
+<script src="../../src/plugins/simulation-scroll-y/dist/simulation-scroll-y.js"></script>
+<script>
+    function createTxt (i) {
+        var str = ''
+        for (var k = 0; k < 100; k++) {
+            str += i + '----'
+        }
+        return str
+    }
+
+    var listData = []
+    for (var i = 0; i < 100; i++) {
+        listData.push({
+            txt: createTxt(i)
+        })
+    }
+
+
+
+</script>
+<script>
+
+    new Vue ({
+        el: '#box',
+        data: {
+            list: [],
+            fm: null
+        },
+        methods: {
+            init: function () {
+                this.fm = new Fmover({
+                    el: '#scroll-box',
+                    plugins: [
+                        simulationScrollY({
+                            loadMore: {
+                                distance: 0,
+                                onLoadMore: function () {
+                                    console.log('fire')
+                                    
+                                    this.loadEnd()
+                                }
+                            }
+                        })
+                    ]
+                })
+            }
+        },
+        mounted: function () {
+            var that = this
+            setTimeout(function () {
+                that.list = listData
+                that.$nextTick(function () {
+                    that.fm[0].refreshSize()
+                })
+            }, 1000)
+
+            this.init()
+            
+        }
+    }) 
+</script>
+
+</body>
+</html>
