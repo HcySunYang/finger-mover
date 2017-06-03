@@ -82,8 +82,6 @@ export default class Fmover {
         for (let i = 0; i < pluginLen; i++) {
             this.pluginsStorage[i].start && this.pluginsStorage[i].start(F)
         }
-
-        event.preventDefault()
     }
     /* istanbul ignore next */
     _move (event) {
@@ -107,8 +105,6 @@ export default class Fmover {
         for (let i = 0; i < pluginStorLen; i++) {
             this.pluginsStorage[i].end && this.pluginsStorage[i].end(F)
         }
-
-        event.preventDefault()
     }
     /* istanbul ignore next */
     _cancel (event) {

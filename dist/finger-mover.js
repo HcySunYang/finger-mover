@@ -746,8 +746,6 @@ Fmover.prototype._start = function _start (event) {
     for (var i$1 = 0; i$1 < pluginLen; i$1++) {
         this$1.pluginsStorage[i$1].start && this$1.pluginsStorage[i$1].start(F);
     }
-
-    event.preventDefault();
 };
 /* istanbul ignore next */
 Fmover.prototype._move = function _move (event) {
@@ -775,8 +773,6 @@ Fmover.prototype._end = function _end (event) {
     for (var i = 0; i < pluginStorLen; i++) {
         this$1.pluginsStorage[i].end && this$1.pluginsStorage[i].end(F);
     }
-
-    event.preventDefault();
 };
 /* istanbul ignore next */
 Fmover.prototype._cancel = function _cancel (event) {
