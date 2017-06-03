@@ -70,6 +70,7 @@
     "rollup-plugin-eslint": "^3.0.0",
     "rollup-watch": "^3.2.2",
     "uglify-js": "^2.8.21",
+    "vue": "^2.3.3",
     "webpack": "^1.13.2",
     "weinre": "^2.0.0-pre-I0Z7U9OV"
   }
