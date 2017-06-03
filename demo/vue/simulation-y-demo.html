@@ -78,7 +78,16 @@
                 this.fm = new Fmover({
                     el: '#scroll-box',
                     plugins: [
-                        simulationScrollY()
+                        simulationScrollY({
+                            loadMore: {
+                                distance: 0,
+                                onLoadMore: function () {
+                                    console.log('fire')
+                                    
+                                    this.loadEnd()
+                                }
+                            }
+                        })
                     ]
                 })
             }

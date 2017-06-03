@@ -66,10 +66,13 @@ export default function (options) {
             isMoving = false,
             moveStatusForStart = false,
             refreshDirty = false,
+            loadEndDirty = false,
             refreshCallBack = noop,
+            loadMoreCallBack = noop,
             moveDirection = {},
             horizontal = false,
-            vertical = false
+            vertical = false,
+            cacheScrollBar = opa.scrollBar
 
         function createScrollBar (parent, height) {
             if (scrollBarDom) {
@@ -256,7 +259,6 @@ export default function (options) {
                 moveTime = tev.transTime
                 currentY = moveTarget
                 transTargetY = currentY + tev.transDistanceY
-
                 if (opa.pullDown &&
                     opa.pullDown.use &&
                     currentY >= opa.pullDown.distance &&
@@ -310,6 +312,9 @@ export default function (options) {
                     }
                     if (refreshDirty) {
                         this.refresh()
+                    }
+                    if (loadEndDirty) {
+                        this.loadEnd()
                     }
                 }
 
@@ -372,6 +377,9 @@ export default function (options) {
                         if (refreshDirty) {
                             that.refresh()
                         }
+                        if (loadEndDirty) {
+                            that.loadEnd()
+                        }
                         if (opa.scrollBar) {
                             cssText(scrollBarDom, 'opacity: 0;')
                         }
@@ -406,7 +414,17 @@ export default function (options) {
                 this.wrapMove(target, time, 'easeOutStrong')
             },
 
-            loadEnd () {
+            loadEnd (callBack) {
+                if (moved.moveStatus === 'start' || isMoving) {
+                    loadEndDirty = true
+                    loadMoreCallBack = callBack || noop
+                    return false
+                }
+
+                let cb = callBack || loadMoreCallBack
+                cb()
+
+                loadEndDirty = false
                 lockLoadmore = false
                 this.refreshSize()
             },
@@ -414,7 +432,7 @@ export default function (options) {
             refresh (callBack) {
                 if (moved.moveStatus === 'start' || isMoving) {
                     refreshDirty = true
-                    refreshCallBack = callBack
+                    refreshCallBack = callBack || noop
                     return false
                 }
                 
@@ -442,8 +460,10 @@ export default function (options) {
                 } else {
                     loadMorePoint = 0
                 }
-                if (upLimit > 0) {
+                if (upLimit >= 0) {
                     opa.scrollBar = false
+                } else {
+                    opa.scrollBar = cacheScrollBar
                 }
                 if (opa.scrollBar) {
                     proportion = wrapSize / elSize

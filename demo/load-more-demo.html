@@ -81,8 +81,10 @@
                         
                         loadMoreDom.innerHTML = 'Loading...'
                         setTimeout(function () {
-                            loadMoreDom.innerHTML = 'Load more'
-                            that.loadEnd()
+                            
+                            that.loadEnd(function () {
+                                loadMoreDom.innerHTML = 'Load more'
+                            })
                         }, 2000)
                     }
 

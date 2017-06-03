@@ -75,10 +75,13 @@ var simulationScrollY = function (options) {
             isMoving = false,
             moveStatusForStart = false,
             refreshDirty = false,
+            loadEndDirty = false,
             refreshCallBack = noop,
+            loadMoreCallBack = noop,
             moveDirection = {},
             horizontal = false,
-            vertical = false;
+            vertical = false,
+            cacheScrollBar = opa.scrollBar;
 
         function createScrollBar (parent, height) {
             if (scrollBarDom) {
@@ -252,7 +255,6 @@ var simulationScrollY = function (options) {
                 moveTime = tev.transTime;
                 currentY = moveTarget;
                 transTargetY = currentY + tev.transDistanceY;
-
                 if (opa.pullDown &&
                     opa.pullDown.use &&
                     currentY >= opa.pullDown.distance &&
@@ -306,6 +308,9 @@ var simulationScrollY = function (options) {
                     }
                     if (refreshDirty) {
                         this.refresh();
+                    }
+                    if (loadEndDirty) {
+                        this.loadEnd();
                     }
                 }
 
@@ -368,6 +373,9 @@ var simulationScrollY = function (options) {
                         if (refreshDirty) {
                             that.refresh();
                         }
+                        if (loadEndDirty) {
+                            that.loadEnd();
+                        }
                         if (opa.scrollBar) {
                             cssText(scrollBarDom, 'opacity: 0;');
                         }
@@ -402,7 +410,17 @@ var simulationScrollY = function (options) {
                 this.wrapMove(target, time, 'easeOutStrong');
             },
 
-            loadEnd: function loadEnd () {
+            loadEnd: function loadEnd (callBack) {
+                if (moved.moveStatus === 'start' || isMoving) {
+                    loadEndDirty = true;
+                    loadMoreCallBack = callBack || noop;
+                    return false
+                }
+
+                var cb = callBack || loadMoreCallBack;
+                cb();
+
+                loadEndDirty = false;
                 lockLoadmore = false;
                 this.refreshSize();
             },
@@ -410,7 +428,7 @@ var simulationScrollY = function (options) {
             refresh: function refresh (callBack) {
                 if (moved.moveStatus === 'start' || isMoving) {
                     refreshDirty = true;
-                    refreshCallBack = callBack;
+                    refreshCallBack = callBack || noop;
                     return false
                 }
                 
@@ -438,8 +456,10 @@ var simulationScrollY = function (options) {
                 } else {
                     loadMorePoint = 0;
                 }
-                if (upLimit > 0) {
+                if (upLimit >= 0) {
                     opa.scrollBar = false;
+                } else {
+                    opa.scrollBar = cacheScrollBar;
                 }
                 if (opa.scrollBar) {
                     proportion = wrapSize / elSize;
