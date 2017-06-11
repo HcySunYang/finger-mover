@@ -95,6 +95,10 @@ export default function (options) {
             init (fmover) {
                 el = fmover.el
                 wrapEl = el.parentNode
+                let elPosition = getStyle(el, 'position')
+                if (elPosition === 'static') {
+                    cssText(el, 'position: relative; z-index: 10;')
+                }
                 this.refreshSize()
                 
             },
