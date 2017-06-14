@@ -81,7 +81,7 @@ export default class Tevent {
 
     start (event) {
         if (this.element) {
-            this.fingerInElement = fingerInElement(this.element, event.pageX, event.pageY)
+            this.fingerInElement = fingerInElement(this.element, event.clientX, event.clientY)
         }
         this.native = event
         this.isMoveOut = false
@@ -92,7 +92,7 @@ export default class Tevent {
 
     move (event) {
         if (this.element) {
-            this.fingerInElement = fingerInElement(this.element, event.pageX, event.pageY)
+            this.fingerInElement = fingerInElement(this.element, event.clientX, event.clientY)
             if (!this.fingerInElement) {
                 if (!this.isMoveOut) {
                     this.end(event)
@@ -129,7 +129,7 @@ export default class Tevent {
 
     end (event) {
         if (this.element) {
-            this.fingerInElement = fingerInElement(this.element, event.pageX, event.pageY)
+            this.fingerInElement = fingerInElement(this.element, event.clientX, event.clientY)
         }
         this.native = event
         this.transDistanceX = computeTransDistance(this.xa, this.xv)

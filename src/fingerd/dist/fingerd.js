@@ -135,7 +135,7 @@ Tevent.prototype._init = function _init (options) {
 
 Tevent.prototype.start = function start (event) {
     if (this.element) {
-        this.fingerInElement = fingerInElement(this.element, event.pageX, event.pageY);
+        this.fingerInElement = fingerInElement(this.element, event.clientX, event.clientY);
     }
     this.native = event;
     this.isMoveOut = false;
@@ -146,7 +146,7 @@ Tevent.prototype.start = function start (event) {
 
 Tevent.prototype.move = function move (event) {
     if (this.element) {
-        this.fingerInElement = fingerInElement(this.element, event.pageX, event.pageY);
+        this.fingerInElement = fingerInElement(this.element, event.clientX, event.clientY);
         if (!this.fingerInElement) {
             if (!this.isMoveOut) {
                 this.end(event);
@@ -183,7 +183,7 @@ Tevent.prototype.move = function move (event) {
 
 Tevent.prototype.end = function end (event) {
     if (this.element) {
-        this.fingerInElement = fingerInElement(this.element, event.pageX, event.pageY);
+        this.fingerInElement = fingerInElement(this.element, event.clientX, event.clientY);
     }
     this.native = event;
     this.transDistanceX = computeTransDistance(this.xa, this.xv);

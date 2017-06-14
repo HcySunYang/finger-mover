@@ -21,18 +21,24 @@
         #scroll-box {
             background: #19bbff;
             width: 3000px;
+            height: 100%;
         }
-        #scroll-box p {
+        #scroll-box .content {
+            display: flex;
+            height: 100%;
+        }
+        #scroll-box .content p {
             margin: 0;
-            height: 40px;
-            line-height: 40px;
-            text-indent: 20px;
+            width: 40px;
+            align-items: stretch;
             color: #fff;
-            white-space: nowrap;
+        }
+        p[data-num="20"] {
+            background-color: red;
         }
     </style>
     <!-- debug script Replace your own IP address -->
-    <!-- <script src='http://10.216.96.119:6789/target/target-script-min.js#anonymous'></script> -->
+     <script src='http://192.168.31.174:6789/target/target-script-min.js#anonymous'></script> 
 </head>
 <body>
 
@@ -48,7 +54,7 @@
     function createTxt (i) {
         var str = ''
         for (var k = 0; k < 100; k++) {
-            str += i + '----'
+            str += i + ' '
         }
         return str
     }
@@ -56,6 +62,7 @@
     var content = document.querySelector('.content')
     for (var i = 0; i < 100; i++) {
         var p = document.createElement('p')
+        p.setAttribute('data-num', i)
         p.innerHTML = createTxt(i)
         content.appendChild(p)
     }
@@ -69,7 +76,8 @@
         ]
     })
 
-    fm[0].scrollTo(-300, 2000)
+    var targetDom = document.querySelector('p[data-num="20"]')
+    fm[0].scrollTo(targetDom, 2000)
 </script>
 
 </body>
