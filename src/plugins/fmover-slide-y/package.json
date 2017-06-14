@@ -1,6 +1,6 @@
 {
   "name": "fmover-slide-y",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "finger-mover vertical slideshow plugin",
   "main": "dist/fmover-slide-y.js",
   "repository": {

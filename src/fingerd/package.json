@@ -1,6 +1,6 @@
 {
   "name": "fingerd",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A development kit for finger unit event management in mobile development",
   "main": "dist/fingerd.js",
   "repository": {
