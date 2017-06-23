@@ -1,17 +1,62 @@
 <template>
-    <div id="app">
-        <simulation-scroll-y></simulation-scroll-y>
+    <div id="box">
+        <simulation-scroll-y>
+            <div class="content">
+                <p v-for="obj in list">{{obj.txt}}</p>
+            </div>
+        </simulation-scroll-y>
     </div>
 </template>
 
 <script>
 import SimulationScrollY from 'component/simulation-scroll-y'
 
+function createTxt (i) {
+    let str = ''
+    for (let k = 0; k < 100; k++) {
+        str += i + '----'
+    }
+    return str
+}
+
+let listData = []
+for (let i = 0; i < 100; i++) {
+    listData.push({
+        txt: createTxt(i)
+    })
+}
 export default {
     name: 'app',
+    data () {
+        return {
+            list: listData
+        }
+    },
     components: {
         SimulationScrollY
     }
 }
 </script>
+
+<style>
+#box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #19bbff;
+}
+.content p {
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    text-indent: 20px;
+    color: #fff;
+    white-space: nowrap;
+}
+</style>
+
 

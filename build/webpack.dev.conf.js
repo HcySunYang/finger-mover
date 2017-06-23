@@ -17,7 +17,8 @@ let baseConfig = {
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
             'demo': path.resolve(__dirname, '../demo/vue-component'),
-            'component': path.resolve(__dirname, '../src/vue-component')
+            'component': path.resolve(__dirname, '../src/vue-component'),
+            'plugins': path.resolve(__dirname, '../src/plugins')
         }
     },
     module: {
