@@ -1,6 +1,9 @@
 <template>
     <div id="box">
-        <simulation-scroll-y>
+        <simulation-scroll-y
+            ref="ssy"
+            @onTransMoveEnd="testFn"
+            >
             <div class="content">
                 <p v-for="obj in list">{{obj.txt}}</p>
             </div>
@@ -32,8 +35,16 @@ export default {
             list: listData
         }
     },
+    methods: {
+        testFn: function (currentY) {
+            console.log(currentY)
+        }
+    },
     components: {
         SimulationScrollY
+    },
+    mounted () {
+        let ssy = this.$refs.ssy
     }
 }
 </script>
@@ -47,7 +58,6 @@ export default {
     bottom: 0;
     box-sizing: border-box;
     overflow: hidden;
-    background-color: #19bbff;
 }
 .content p {
     margin: 0;
@@ -56,6 +66,7 @@ export default {
     text-indent: 20px;
     color: #fff;
     white-space: nowrap;
+    background-color: #19bbff;
 }
 </style>
 
