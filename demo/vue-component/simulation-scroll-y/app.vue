@@ -2,7 +2,7 @@
     <div id="box">
         <simulation-scroll-y
             ref="ssy"
-            @onTransMoveEnd="testFn"
+            @on-transmove-end="testFn"
             >
             <div class="content">
                 <p v-for="obj in list">{{obj.txt}}</p>

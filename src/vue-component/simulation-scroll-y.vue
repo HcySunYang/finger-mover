@@ -1,6 +1,8 @@
 <template>
     <div>
+        <slot name="pulldown"></slot>
         <slot></slot>
+        <slot name="loadmore"></slot>
     </div>
 </template>
 
@@ -10,11 +12,6 @@ import simulationScrollY from 'plugins/simulation-scroll-y/simulation-scroll-y'
 
 export default {
     name: 'simulationScrollY',
-    data () {
-        return {
-
-        }
-    },
     props: {
         scrollBar: {
             type: Boolean,
@@ -76,13 +73,13 @@ export default {
                     loadMore: this.loadMore,
 
                     onTouchMove: (currentY) => {
-                        this.$emit('onTouchMove', currentY)
+                        this.$emit('on-touchmove', currentY)
                     },
                     onTransMove: (currentY) => {
-                        this.$emit('onTransMove', currentY)
+                        this.$emit('on-transmove', currentY)
                     },
                     onTransMoveEnd: (currentY) => {
-                        this.$emit('onTransMoveEnd', currentY)
+                        this.$emit('on-transmove-end', currentY)
                     }
                 })
             ]
