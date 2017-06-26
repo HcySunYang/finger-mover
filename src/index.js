@@ -27,7 +27,7 @@ export default class Fmover {
     }
 
     _init (options) {
-        this.el = document.querySelector(options.el)
+        this.el = typeof options.el === 'string' ? document.querySelector(options.el) : options.el
         if (!this.el) {
             throwError(`This is an invalid selector: ${options.el}`)
         }

@@ -1,4 +1,10 @@
 module.exports = {
+    root: true,
+    parser: 'babel-eslint',
+    // required to lint *.vue files
+    plugins: [
+        'html'
+    ],
     "env": {
         "browser": true,
         "es6": true
