@@ -1,4 +1,6 @@
 const path = require('path')
+const webpack = require('webpack')
+
 let webpackConfig = {
     resolve: {
         alias: {
@@ -8,23 +10,30 @@ let webpackConfig = {
         }
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 exclude: /node_modules/
             }
         ]
     },
-    babel: {
-        plugins: [['istanbul', {
-            exclude: [
-                'test/',
-                'src/plugins',
-                'src/fingerd'
-            ]
-        }]]
-    }
+    plugins: [
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                babel: {
+                    plugins: [['istanbul', {
+                        exclude: [
+                            'test/',
+                            'src/plugins',
+                            'src/fingerd'
+                        ]
+                    }]]
+                }
+            }
+        })
+     ]
+    
 }
 
 module.exports = {
