@@ -1,5 +1,5 @@
 /*!
- * finger-mover.js v1.1.5
+ * finger-mover.js v1.1.6
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */
@@ -687,7 +687,7 @@ var Fmover = function Fmover (options) {
 };
 
 Fmover.prototype._init = function _init (options) {
-    this.el = document.querySelector(options.el);
+    this.el = typeof options.el === 'string' ? document.querySelector(options.el) : options.el;
     if (!this.el) {
         throwError$1(("This is an invalid selector: " + (options.el)));
     }
