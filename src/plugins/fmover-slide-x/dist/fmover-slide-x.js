@@ -1,5 +1,5 @@
 /*!
- * fmover-slide-x.js v1.1.6
+ * fmover-slide-x.js v1.1.7
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */

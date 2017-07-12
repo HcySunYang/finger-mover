@@ -1,6 +1,6 @@
 {
   "name": "simulation-scroll-x",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Horizontal scroll simulation solution on mobile device.",
   "main": "dist/simulation-scroll-x.js",
   "repository": {
