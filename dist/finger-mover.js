@@ -73,7 +73,7 @@ function isInElement (parent, child) {
 
 function is3DMatrix (el) {
     var matrix = getStyle(el, 'WebkitTransform');
-    if (matrix === 'none') {
+    if (!matrix || matrix === 'none') {
         return false
     }
     var matrixArray = matrix.match(/[+-]?\d*[.]?\d+(?=,|\))/g);
