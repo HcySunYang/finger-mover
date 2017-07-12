@@ -61,7 +61,7 @@ export function isInElement (parent, child) {
 
 export function is3DMatrix (el) {
     let matrix = getStyle(el, 'WebkitTransform')
-    if (matrix === 'none') {
+    if (!matrix || matrix === 'none') {
         return false
     }
     let matrixArray = matrix.match(/[+-]?\d*[.]?\d+(?=,|\))/g)

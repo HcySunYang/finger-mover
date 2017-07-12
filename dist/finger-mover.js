@@ -73,7 +73,7 @@ function isInElement (parent, child) {
 
 function is3DMatrix (el) {
     var matrix = getStyle(el, 'WebkitTransform');
-    if (matrix === 'none') {
+    if (!matrix || matrix === 'none') {
         return false
     }
     var matrixArray = matrix.match(/[+-]?\d*[.]?\d+(?=,|\))/g);
@@ -687,7 +687,7 @@ var Fmover = function Fmover (options) {
 };
 
 Fmover.prototype._init = function _init (options) {
-    this.el = document.querySelector(options.el);
+    this.el = typeof options.el === 'string' ? document.querySelector(options.el) : options.el;
     if (!this.el) {
         throwError$1(("This is an invalid selector: " + (options.el)));
     }
