@@ -233,13 +233,13 @@ export default function (options) {
                             if (currentX >= leftLimit) {
                                 moved.stop((currentPos) => {
                                     currentX = leftLimit
-                                    moved.transform(el, 'translateY', currentX)
+                                    moved.transform(el, 'translateX', currentX)
                                 })
                             }
                             if (currentX <= rightLimit) {
                                 moved.stop((currentPos) => {
                                     currentX = rightLimit
-                                    moved.transform(el, 'translateY', rightLimit)
+                                    moved.transform(el, 'translateX', rightLimit)
                                 })
                             }
                         }

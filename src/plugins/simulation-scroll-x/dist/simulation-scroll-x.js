@@ -230,13 +230,13 @@ var simulationScrollX = function (options) {
                             if (currentX >= leftLimit) {
                                 moved.stop(function (currentPos) {
                                     currentX = leftLimit;
-                                    moved.transform(el, 'translateY', currentX);
+                                    moved.transform(el, 'translateX', currentX);
                                 });
                             }
                             if (currentX <= rightLimit) {
                                 moved.stop(function (currentPos) {
                                     currentX = rightLimit;
-                                    moved.transform(el, 'translateY', rightLimit);
+                                    moved.transform(el, 'translateX', rightLimit);
                                 });
                             }
                         }
