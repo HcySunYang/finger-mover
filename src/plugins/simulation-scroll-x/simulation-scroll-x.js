@@ -36,6 +36,7 @@ export default function (options) {
             barRightLimit = 0,
             moved = new Moved(),
             currentX = 0,
+            moveTarget = 0,
             transTargetX = 0,
             moveType = 'easeOutStrong',
             moveTime = 0,
@@ -117,8 +118,10 @@ export default function (options) {
                     return false
                 }
                 let tev = fingerd.fingers[0],
-                    moveTarget = currentX + tev.distanceX,
                     fingerInElement = tev.fingerInElement
+
+                moveTarget = currentX + tev.distanceX
+                    
                 if (!fingerInElement) {
                     if (!isMoveOut) {
                         isMoveOut = true
@@ -167,7 +170,7 @@ export default function (options) {
                 let tweenS
 
                 moveTime = tev.transTime
-                currentX = currentX + tev.distanceX
+                currentX = moveTarget
                 transTargetX = currentX + tev.transDistanceX
 
                 if (currentX > leftLimit || rightLimit > 0) {

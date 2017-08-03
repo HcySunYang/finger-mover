@@ -45,6 +45,7 @@ var simulationScrollX = function (options) {
             barRightLimit = 0,
             moved = new Moved(),
             currentX = 0,
+            moveTarget = 0,
             transTargetX = 0,
             moveType = 'easeOutStrong',
             moveTime = 0,
@@ -114,8 +115,10 @@ var simulationScrollX = function (options) {
                     return false
                 }
                 var tev = fingerd.fingers[0],
-                    moveTarget = currentX + tev.distanceX,
                     fingerInElement = tev.fingerInElement;
+
+                moveTarget = currentX + tev.distanceX;
+                    
                 if (!fingerInElement) {
                     if (!isMoveOut) {
                         isMoveOut = true;
@@ -164,7 +167,7 @@ var simulationScrollX = function (options) {
                 var tweenS;
 
                 moveTime = tev.transTime;
-                currentX = currentX + tev.distanceX;
+                currentX = moveTarget;
                 transTargetX = currentX + tev.transDistanceX;
 
                 if (currentX > leftLimit || rightLimit > 0) {
