@@ -39,6 +39,12 @@ and
 npm install --save finger-mover
 ```
 
+#### yarn
+
+```
+yarn add finger-mover
+```
+
 `finger-mover` released as a `umd` module. You can use it in any way for your favorite. You can get global variable `Fmover` by serving as `<script>` tag.
 
 ## Usage
