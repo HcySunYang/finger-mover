@@ -61,7 +61,7 @@ export default {
             this.fm[0].refreshSize()
         }
     },
-    mounted () {
+    updated () {
         this.fm = new Fmover({
             el: this.$el,
             plugins: [
