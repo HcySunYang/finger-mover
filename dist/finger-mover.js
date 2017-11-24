@@ -1,5 +1,5 @@
 /*!
- * finger-mover.js v1.1.8
+ * finger-mover.js v1.1.9
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */
