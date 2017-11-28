@@ -55,10 +55,10 @@ export default {
             this.fm[0].loadEnd()
         },
         refresh (callBack) {
-            this.fm[0].refresh(callBack)
+            this.delayed(this.fm[0].refresh, callBack)
         },
         refreshSize () {
-            this.fm[0].refreshSize()
+            this.delayed(this.fm[0].refreshSize)
         },
         createInstance () {
             if (this.fm) {
@@ -84,17 +84,16 @@ export default {
                     })
                 ]
             })
+        },
+        delayed (fn, arg) {
+            setTimeout(fn.bind(this, arg), 0)
         }
     },
     mounted () {
-        setTimeout(() => {
-            this.createInstance()
-        }, 0)
+        this.delayed(this.createInstance)
     },
     updated () {
-        setTimeout(() => {
-            this.createInstance()
-        }, 0)
+        this.delayed(this.createInstance)
     }
 }
 </script>
