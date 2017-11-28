@@ -59,31 +59,42 @@ export default {
         },
         refreshSize () {
             this.fm[0].refreshSize()
+        },
+        createInstance () {
+            if (this.fm) {
+                this.fm[0].refreshSize()
+                return
+            }
+            this.fm = new Fmover({
+                el: this.$el,
+                plugins: [
+                    simulationScrollY({
+                        scrollBar: this.scrollBar,
+                        unidirectional: this.unidirectional,
+                        bounce: this.bounce,
+                        onTouchMove: (currentY) => {
+                            this.$emit('on-touchmove', currentY)
+                        },
+                        onTransMove: (currentY) => {
+                            this.$emit('on-transmove', currentY)
+                        },
+                        onTransMoveEnd: (currentY) => {
+                            this.$emit('on-transmove-end', currentY)
+                        }
+                    })
+                ]
+            })
         }
     },
+    mounted () {
+        setTimeout(() => {
+            this.createInstance()
+        }, 0)
+    },
     updated () {
-        this.fm = new Fmover({
-            el: this.$el,
-            plugins: [
-                simulationScrollY({
-                    scrollBar: this.scrollBar,
-                    unidirectional: this.unidirectional,
-                    bounce: this.bounce,
-                    pullDown: this.pullDown,
-                    loadMore: this.loadMore,
-
-                    onTouchMove: (currentY) => {
-                        this.$emit('on-touchmove', currentY)
-                    },
-                    onTransMove: (currentY) => {
-                        this.$emit('on-transmove', currentY)
-                    },
-                    onTransMoveEnd: (currentY) => {
-                        this.$emit('on-transmove-end', currentY)
-                    }
-                })
-            ]
-        })
+        setTimeout(() => {
+            this.createInstance()
+        }, 0)
     }
 }
 </script>
