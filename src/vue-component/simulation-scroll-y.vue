@@ -55,35 +55,45 @@ export default {
             this.fm[0].loadEnd()
         },
         refresh (callBack) {
-            this.fm[0].refresh(callBack)
+            this.delayed(this.fm[0].refresh, callBack)
         },
         refreshSize () {
-            this.fm[0].refreshSize()
+            this.delayed(this.fm[0].refreshSize)
+        },
+        createInstance () {
+            if (this.fm) {
+                this.fm[0].refreshSize()
+                return
+            }
+            this.fm = new Fmover({
+                el: this.$el,
+                plugins: [
+                    simulationScrollY({
+                        scrollBar: this.scrollBar,
+                        unidirectional: this.unidirectional,
+                        bounce: this.bounce,
+                        onTouchMove: (currentY) => {
+                            this.$emit('on-touchmove', currentY)
+                        },
+                        onTransMove: (currentY) => {
+                            this.$emit('on-transmove', currentY)
+                        },
+                        onTransMoveEnd: (currentY) => {
+                            this.$emit('on-transmove-end', currentY)
+                        }
+                    })
+                ]
+            })
+        },
+        delayed (fn, arg) {
+            setTimeout(fn.bind(this, arg), 0)
         }
     },
+    mounted () {
+        this.delayed(this.createInstance)
+    },
     updated () {
-        this.fm = new Fmover({
-            el: this.$el,
-            plugins: [
-                simulationScrollY({
-                    scrollBar: this.scrollBar,
-                    unidirectional: this.unidirectional,
-                    bounce: this.bounce,
-                    pullDown: this.pullDown,
-                    loadMore: this.loadMore,
-
-                    onTouchMove: (currentY) => {
-                        this.$emit('on-touchmove', currentY)
-                    },
-                    onTransMove: (currentY) => {
-                        this.$emit('on-transmove', currentY)
-                    },
-                    onTransMoveEnd: (currentY) => {
-                        this.$emit('on-transmove-end', currentY)
-                    }
-                })
-            ]
-        })
+        this.delayed(this.createInstance)
     }
 }
 </script>
