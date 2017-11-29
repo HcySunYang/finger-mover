@@ -276,9 +276,6 @@ export default function (options) {
                     }
                     target = -getRelativeRect(el, child).left
                 }
-                console.log(rightLimit)
-                console.log(leftLimit)
-                console.log(target)
                 if (limit && (target < rightLimit || rightLimit > 0)) {
                     target = rightLimit
                 } else if (limit && target > leftLimit) {
