@@ -262,7 +262,7 @@ export default function (options) {
                 })
             },
 
-            scrollTo (target, time) {
+            scrollTo (target, time, limit) {
                 let child,
                     selector
                 if (typeof target === 'string') {
@@ -275,6 +275,14 @@ export default function (options) {
                         throwError('ScrollTo function argument error, `child` must be a child of `parent`')
                     }
                     target = -getRelativeRect(el, child).left
+                }
+                console.log(rightLimit)
+                console.log(leftLimit)
+                console.log(target)
+                if (limit && (target < rightLimit || rightLimit > 0)) {
+                    target = rightLimit
+                } else if (limit && target > leftLimit) {
+                    target = leftLimit
                 }
 
                 currentX = target

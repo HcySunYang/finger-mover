@@ -259,7 +259,7 @@ var simulationScrollX = function (options) {
                 });
             },
 
-            scrollTo: function scrollTo (target, time) {
+            scrollTo: function scrollTo (target, time, limit) {
                 var child,
                     selector;
                 if (typeof target === 'string') {
@@ -272,6 +272,14 @@ var simulationScrollX = function (options) {
                         throwError('ScrollTo function argument error, `child` must be a child of `parent`');
                     }
                     target = -getRelativeRect(el, child).left;
+                }
+                console.log(rightLimit);
+                console.log(leftLimit);
+                console.log(target);
+                if (limit && (target < rightLimit || rightLimit > 0)) {
+                    target = rightLimit;
+                } else if (limit && target > leftLimit) {
+                    target = leftLimit;
                 }
 
                 currentX = target;
