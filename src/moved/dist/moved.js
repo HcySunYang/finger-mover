@@ -203,7 +203,7 @@ Moved.prototype.start = function start (options) {
     this.endCallBack = endCallBack;
     this.inCallBack = inCallBack;
     this.currentPos = {};
-    this.moveStatus = MOVE_STATUS.stop;
+    this.moveStatus = MOVE_STATUS.start;
 
     this.b = {};
     this.c = {};
