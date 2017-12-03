@@ -1,5 +1,5 @@
 /*!
- * moved.js v1.0.1
+ * moved.js v1.2.2
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */

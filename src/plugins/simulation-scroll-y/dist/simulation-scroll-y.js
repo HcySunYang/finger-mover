@@ -1,5 +1,5 @@
 /*!
- * simulation-scroll-y.js v1.0.1
+ * simulation-scroll-y.js v1.2.2
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */
@@ -40,7 +40,8 @@ var simulationScrollY = function (options) {
             },
             onTouchMove: noop,
             onTransMove: noop,
-            onTransMoveEnd: noop
+            onTransMoveEnd: noop,
+            onMotionStop: noop
         }, options);
 
         var MIN_DISTANCE = 100;
@@ -149,6 +150,7 @@ var simulationScrollY = function (options) {
                 moved.stop(function (currentPos) {
                     isMoving = false;
                     moveTarget = currentY = currentPos.translateY;
+                    opa.onMotionStop(moveTarget);
                 });
             },
             move: function move (fingerd) {
@@ -382,6 +384,7 @@ var simulationScrollY = function (options) {
                         opa.onTransMoveEnd.call(this, currentY);
                         moveStatusForStart = false;
                         borderBounce = false;
+                        opa.onMotionStop(currentY);
                     }
                 });
             },
