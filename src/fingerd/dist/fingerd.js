@@ -1,5 +1,5 @@
 /*!
- * fingerd.js v1.2.2
+ * fingerd.js v1.2.3
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */

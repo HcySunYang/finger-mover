@@ -29,7 +29,9 @@ export default function (options) {
                 distance: 0,
                 onLoadMore: noop
             },
+            onTouchStart: noop,
             onTouchMove: noop,
+            onTouchEnd: noop,
             onTransMove: noop,
             onTransMoveEnd: noop,
             onMotionStop: noop
@@ -65,7 +67,7 @@ export default function (options) {
             lockPullDown = false,
             lockLoadmore = false,
             isMoving = false,
-            moveStatusForStart = false,
+            isMotion = false,
             refreshDirty = false,
             loadEndDirty = false,
             refreshCallBack = noop,
@@ -141,7 +143,7 @@ export default function (options) {
                 let tev = fingerd.fingers[0]
                 moveType = 'easeOutStrong'
                 isMoveOut = false
-                moveStatusForStart = moved.moveStatus === 'stop' ? false : true
+                isMotion = moved.moveStatus === 'stop' ? false : true
                 isTriggerOnActive = false
                 isTriggerOnAfter = false
                 horizontal = false
@@ -151,9 +153,13 @@ export default function (options) {
                 if (currentY > downLimit) {
                     currentY = currentY / wearDistance
                 }
+                if (!isMotion) opa.onTouchStart(isMotion)
                 moved.stop((currentPos) => {
                     isMoving = false
                     moveTarget = currentY = currentPos.translateY
+                    // Only when the movement, the callback function will be performed
+                    // isMotion = true
+                    opa.onTouchStart(true)
                     opa.onMotionStop(moveTarget)
                 })
             },
@@ -222,12 +228,13 @@ export default function (options) {
                     opa.onTouchMove.call(this, moveTarget)
                 }
 
-                if (vertical && opa.unidirectional || moveStatusForStart) {
+                if (vertical && opa.unidirectional || isMotion) {
                     return false
                 }
             },
             end (fingerd) {
                 if (horizontal && !borderBounce) {
+                    opa.onTouchEnd(moved.moveStatus)
                     return false
                 }
                 let tev = fingerd.fingers[0],
@@ -241,7 +248,7 @@ export default function (options) {
                     fingerInElement) {
                     this.makeMove(tev)
                 }
-
+                opa.onTouchEnd(moved.moveStatus === 'start')
             },
 
             cancel (fingerd) {
@@ -386,7 +393,7 @@ export default function (options) {
                             cssText(scrollBarDom, 'opacity: 0;')
                         }
                         opa.onTransMoveEnd.call(this, currentY)
-                        moveStatusForStart = false
+                        isMotion = false
                         borderBounce = false
                         opa.onMotionStop(currentY)
                     }

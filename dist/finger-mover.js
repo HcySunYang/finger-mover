@@ -1,5 +1,5 @@
 /*!
- * finger-mover.js v1.2.2
+ * finger-mover.js v1.2.3
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */
@@ -257,7 +257,7 @@ Moved.prototype.start = function start (options) {
     this.endCallBack = endCallBack;
     this.inCallBack = inCallBack;
     this.currentPos = {};
-    this.moveStatus = MOVE_STATUS.stop;
+    this.moveStatus = MOVE_STATUS.start;
 
     this.b = {};
     this.c = {};

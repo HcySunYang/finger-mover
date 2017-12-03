@@ -65,8 +65,14 @@
         el: '#scroll-box',
         plugins: [
             simulationScrollY({
+                onTouchStart: function (isMotion) {
+                    console.log('touchstart: ' + isMotion)
+                },
                 onTouchMove: function (currentY) {
                     console.log(currentY)
+                },
+                onTouchEnd: function (isMotion) {
+                    console.log('touchend: ' + isMotion)
                 },
                 onTransMove: function (currentY) {
                     console.log(currentY)
