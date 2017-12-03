@@ -52,6 +52,7 @@ export default class Moved {
         }
         if (this.isArrivals) {
             this.endCallBack && this.endCallBack(this.b)
+            this.moveStatus = MOVE_STATUS.stop
             return false
         }
 

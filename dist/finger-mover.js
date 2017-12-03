@@ -1,5 +1,5 @@
 /*!
- * finger-mover.js v1.2.3
+ * finger-mover.js v1.2.6
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */
@@ -272,6 +272,7 @@ Moved.prototype.start = function start (options) {
     }
     if (this.isArrivals) {
         this.endCallBack && this.endCallBack(this.b);
+        this.moveStatus = MOVE_STATUS.stop;
         return false
     }
 
