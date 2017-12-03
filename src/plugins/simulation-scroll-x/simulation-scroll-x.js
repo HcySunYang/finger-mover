@@ -17,7 +17,8 @@ export default function (options) {
             bounce: true,
             onTouchMove: noop,
             onTransMove: noop,
-            onTransMoveEnd: noop
+            onTransMoveEnd: noop,
+            onMotionStop: noop
         }, options)
 
         const MIN_DISTANCE = 100
@@ -111,6 +112,7 @@ export default function (options) {
 
                 moved.stop((currentPos) => {
                     currentX = currentPos.translateX
+                    opa.onMotionStop(currentX)
                 })
             },
             move (fingerd) {
@@ -255,6 +257,7 @@ export default function (options) {
                     endCallBack: function (currentPos) {
                         currentX = currentPos.translateX
                         opa.onTransMoveEnd.call(this, currentX)
+                        opa.onMotionStop(currentX)
                         if (opa.scrollBar) {
                             cssText(scrollBarDom, 'opacity: 0;')
                         }
@@ -276,9 +279,6 @@ export default function (options) {
                     }
                     target = -getRelativeRect(el, child).left
                 }
-                console.log(rightLimit)
-                console.log(leftLimit)
-                console.log(target)
                 if (limit && (target < rightLimit || rightLimit > 0)) {
                     target = rightLimit
                 } else if (limit && target > leftLimit) {

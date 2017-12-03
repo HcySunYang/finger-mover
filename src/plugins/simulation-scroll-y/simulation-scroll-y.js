@@ -31,7 +31,8 @@ export default function (options) {
             },
             onTouchMove: noop,
             onTransMove: noop,
-            onTransMoveEnd: noop
+            onTransMoveEnd: noop,
+            onMotionStop: noop
         }, options)
 
         const MIN_DISTANCE = 100
@@ -153,6 +154,7 @@ export default function (options) {
                 moved.stop((currentPos) => {
                     isMoving = false
                     moveTarget = currentY = currentPos.translateY
+                    opa.onMotionStop(moveTarget)
                 })
             },
             move (fingerd) {
@@ -386,6 +388,7 @@ export default function (options) {
                         opa.onTransMoveEnd.call(this, currentY)
                         moveStatusForStart = false
                         borderBounce = false
+                        opa.onMotionStop(currentY)
                     }
                 })
             },

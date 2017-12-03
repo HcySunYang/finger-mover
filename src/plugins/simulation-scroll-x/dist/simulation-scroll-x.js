@@ -1,5 +1,5 @@
 /*!
- * simulation-scroll-x.js v1.2.0
+ * simulation-scroll-x.js v1.2.2
  * (c) 2017 HcySunYang
  * Released under the MIT License.
  */
@@ -26,7 +26,8 @@ var simulationScrollX = function (options) {
             bounce: true,
             onTouchMove: noop,
             onTransMove: noop,
-            onTransMoveEnd: noop
+            onTransMoveEnd: noop,
+            onMotionStop: noop
         }, options);
 
         var MIN_DISTANCE = 100;
@@ -108,6 +109,7 @@ var simulationScrollX = function (options) {
 
                 moved.stop(function (currentPos) {
                     currentX = currentPos.translateX;
+                    opa.onMotionStop(currentX);
                 });
             },
             move: function move (fingerd) {
@@ -252,6 +254,7 @@ var simulationScrollX = function (options) {
                     endCallBack: function (currentPos) {
                         currentX = currentPos.translateX;
                         opa.onTransMoveEnd.call(this, currentX);
+                        opa.onMotionStop(currentX);
                         if (opa.scrollBar) {
                             cssText(scrollBarDom, 'opacity: 0;');
                         }
@@ -273,9 +276,6 @@ var simulationScrollX = function (options) {
                     }
                     target = -getRelativeRect(el, child).left;
                 }
-                console.log(rightLimit);
-                console.log(leftLimit);
-                console.log(target);
                 if (limit && (target < rightLimit || rightLimit > 0)) {
                     target = rightLimit;
                 } else if (limit && target > leftLimit) {
