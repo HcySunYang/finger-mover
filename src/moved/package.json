@@ -1,6 +1,6 @@
 {
   "name": "moved",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Miniature motion solutions",
   "main": "dist/moved.js",
   "repository": {

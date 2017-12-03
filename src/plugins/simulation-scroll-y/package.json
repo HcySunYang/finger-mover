@@ -1,6 +1,6 @@
 {
   "name": "simulation-scroll-y",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Vertical scroll simulation solution on mobile device.",
   "main": "dist/simulation-scroll-y.js",
   "repository": {
