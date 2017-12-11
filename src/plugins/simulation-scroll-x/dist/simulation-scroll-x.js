@@ -276,9 +276,11 @@ var simulationScrollX = function (options) {
                     }
                     target = -getRelativeRect(el, child).left;
                 }
-                if (limit && (target < rightLimit || rightLimit > 0)) {
+                if (limit && target >= leftLimit) {
+                    target = leftLimit;
+                } else if (limit && rightLimit < 0 && target < rightLimit) {
                     target = rightLimit;
-                } else if (limit && target > leftLimit) {
+                } else if (limit && rightLimit >= 0) {
                     target = leftLimit;
                 }
 
