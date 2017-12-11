@@ -1,6 +1,6 @@
 {
   "name": "fmover-slide-x",
-  "version": "1.2.7",
+  "version": "1.2.9",
   "description": "finger-mover horizontal slideshow plugin",
   "main": "dist/fmover-slide-x.js",
   "repository": {
