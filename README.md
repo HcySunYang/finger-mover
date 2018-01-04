@@ -89,4 +89,4 @@ Thanks [Ri Xu](https://xuri.me) provides web hosting service and doc translation
 
 [MIT](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2017, HcySunYang
+Copyright (c) 2017 - 2018, HcySunYang
