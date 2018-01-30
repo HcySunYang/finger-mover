@@ -175,7 +175,7 @@ export default function (options) {
                 cloneNodes.forEach((o) => {
                     o.parentNode.removeChild(o)
                 })
-                slideEls = toArray(el.querySelectorAll('div'))
+                slideEls = toArray(el.children)
                 slideNumber = slideEls.length
                 slideWidth = parseInt(getStyle(parentEl, 'width'))
                 this.index = force

@@ -1,6 +1,6 @@
 /*!
- * fmover-slide-x.js v1.2.6
- * (c) 2017 HcySunYang
+ * fmover-slide-x.js v1.2.9
+ * (c) 2018 HcySunYang
  * Released under the MIT License.
  */
 (function (global, factory) {
@@ -184,7 +184,7 @@ var fmoverSlideX = function (options) {
                 cloneNodes.forEach(function (o) {
                     o.parentNode.removeChild(o);
                 });
-                slideEls = toArray(el.querySelectorAll('div'));
+                slideEls = toArray(el.children);
                 slideNumber = slideEls.length;
                 slideWidth = parseInt(getStyle(parentEl, 'width'));
                 this.index = force
