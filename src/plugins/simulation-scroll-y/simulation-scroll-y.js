@@ -170,7 +170,6 @@ export default function (options) {
                 isMoving = true
                 let tev = fingerd.fingers[0],
                     fingerInElement = tev.fingerInElement
-                
                 if (!fingerInElement) {
                     if (!isMoveOut) {
                         isMoveOut = true
@@ -425,7 +424,7 @@ export default function (options) {
             },
 
             loadEnd (callBack) {
-                if (moved.moveStatus === 'start' || isMoving) {
+                if (!isMoveOut && (moved.moveStatus === 'start' || isMoving)) {
                     loadEndDirty = true
                     loadMoreCallBack = callBack || noop
                     return false
@@ -440,7 +439,7 @@ export default function (options) {
             },
 
             refresh (callBack) {
-                if (moved.moveStatus === 'start' || isMoving) {
+                if (!isMoveOut && (moved.moveStatus === 'start' || isMoving)) {
                     refreshDirty = true
                     refreshCallBack = callBack || noop
                     return false

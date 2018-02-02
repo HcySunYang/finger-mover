@@ -1,5 +1,5 @@
 /*!
- * simulation-scroll-y.js v1.2.9
+ * simulation-scroll-y.js v1.3.1
  * (c) 2018 HcySunYang
  * Released under the MIT License.
  */
@@ -166,7 +166,6 @@ var simulationScrollY = function (options) {
                 isMoving = true;
                 var tev = fingerd.fingers[0],
                     fingerInElement = tev.fingerInElement;
-                
                 if (!fingerInElement) {
                     if (!isMoveOut) {
                         isMoveOut = true;
@@ -421,7 +420,7 @@ var simulationScrollY = function (options) {
             },
 
             loadEnd: function loadEnd (callBack) {
-                if (moved.moveStatus === 'start' || isMoving) {
+                if (!isMoveOut && (moved.moveStatus === 'start' || isMoving)) {
                     loadEndDirty = true;
                     loadMoreCallBack = callBack || noop;
                     return false
@@ -436,7 +435,7 @@ var simulationScrollY = function (options) {
             },
 
             refresh: function refresh (callBack) {
-                if (moved.moveStatus === 'start' || isMoving) {
+                if (!isMoveOut && (moved.moveStatus === 'start' || isMoving)) {
                     refreshDirty = true;
                     refreshCallBack = callBack || noop;
                     return false
