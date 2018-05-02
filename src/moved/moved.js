@@ -60,7 +60,7 @@ export default class Moved {
     }
 
     stop (callback) {
-        if (this.moveStatus === MOVE_STATUS.stop) {
+        if (this.moveStatus === MOVE_STATUS.stop || !this.anim) {
             return this
         }
         this.moveStatus = MOVE_STATUS.stop

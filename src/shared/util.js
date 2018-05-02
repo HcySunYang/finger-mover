@@ -107,7 +107,10 @@ export function getPropFromMatrix (el) {
     if (!matrix || matrix === 'none') {
         transform(el, 'translateZ', 0.01)
     }
-
+    /* The element's dispaly attribute value is none */
+    if (matrix === 'none') {
+        return {}
+    }
     matrix = getStyle(el, 'WebkitTransform')
         .match(/[+-]?\d*[.]?\d+(?=,|\))/g)
         .map((o) => {

@@ -1,5 +1,5 @@
 /*!
- * moved.js v1.3.1
+ * moved.js v1.3.2
  * (c) 2018 HcySunYang
  * Released under the MIT License.
  */
@@ -85,7 +85,10 @@ function getPropFromMatrix (el) {
     if (!matrix || matrix === 'none') {
         transform(el, 'translateZ', 0.01);
     }
-
+    /* The element's dispaly attribute value is none */
+    if (matrix === 'none') {
+        return {}
+    }
     matrix = getStyle(el, 'WebkitTransform')
         .match(/[+-]?\d*[.]?\d+(?=,|\))/g)
         .map(function (o) {
@@ -228,7 +231,7 @@ Moved.prototype.start = function start (options) {
 Moved.prototype.stop = function stop (callback) {
         var this$1 = this;
 
-    if (this.moveStatus === MOVE_STATUS.stop) {
+    if (this.moveStatus === MOVE_STATUS.stop || !this.anim) {
         return this
     }
     this.moveStatus = MOVE_STATUS.stop;
