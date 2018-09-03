@@ -155,7 +155,7 @@ export default function (options) {
                 force && moved && moved.stop(() => {
                     lock = false
                 })
-                let cloneNodes = toArray(document.querySelectorAll('[clone=true]'))
+                let cloneNodes = toArray(el.querySelectorAll('[clone=true]'))
                 cloneNodes.forEach((o) => {
                     o.parentNode.removeChild(o)
                 })

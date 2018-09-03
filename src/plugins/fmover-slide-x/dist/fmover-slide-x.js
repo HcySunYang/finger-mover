@@ -1,5 +1,5 @@
 /*!
- * fmover-slide-x.js v1.3.2
+ * fmover-slide-x.js v1.3.4
  * (c) 2018 HcySunYang
  * Released under the MIT License.
  */
@@ -180,7 +180,7 @@ var fmoverSlideX = function (options) {
                 force && moved && moved.stop(function () {
                     lock = false;
                 });
-                var cloneNodes = toArray(document.querySelectorAll('[clone=true]'));
+                var cloneNodes = toArray(el.querySelectorAll('[clone=true]'));
                 cloneNodes.forEach(function (o) {
                     o.parentNode.removeChild(o);
                 });
