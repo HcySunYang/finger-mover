@@ -65,9 +65,13 @@
     <div>Refresh force</div>
 </div>
 
+<div class="btn">
+    <div>Destroy</div>
+</div>
 
-<script src="http://172.18.23.149:3131/dist/finger-mover.js"></script>
-<script src="http://172.18.23.149:3131/src/plugins/fmover-slide-x/dist/fmover-slide-x.js"></script>
+
+<script src="../dist/finger-mover.js"></script>
+<script src="../src/plugins/fmover-slide-x/dist/fmover-slide-x.js"></script>
 <script>
     var fm = new Fmover({
         el: '.slide-wrap',
@@ -156,6 +160,11 @@
         parent.appendChild(div)
 
         fm[0].refresh(true)
+    }, false)
+
+    btns[8].addEventListener('touchstart', function () {
+        fm[0].destroy()
+        document.getElementById('box').innerHTML = ''
     }, false)
 
 

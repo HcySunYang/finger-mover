@@ -1,5 +1,5 @@
 /*!
- * fmover-slide-x.js v1.3.4
+ * fmover-slide-x.js v1.4.0
  * (c) 2018 HcySunYang
  * Released under the MIT License.
  */
@@ -358,6 +358,9 @@ var fmoverSlideX = function (options) {
                             : index < 1
                                 ? 1
                                 : index
+            },
+            destroy: function destroy () {
+                clearInterval(timer);
             }
 
         }

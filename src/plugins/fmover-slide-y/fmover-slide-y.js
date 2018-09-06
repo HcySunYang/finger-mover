@@ -331,6 +331,9 @@ export default function (options) {
                             : index < 1
                                 ? 1
                                 : index
+            },
+            destroy () {
+                clearInterval(timer)
             }
 
         }
