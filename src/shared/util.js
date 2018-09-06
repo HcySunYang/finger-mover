@@ -111,11 +111,14 @@ export function getPropFromMatrix (el) {
     if (matrix === 'none') {
         return {}
     }
-    matrix = getStyle(el, 'WebkitTransform')
-        .match(/[+-]?\d*[.]?\d+(?=,|\))/g)
-        .map((o) => {
-            return parseInt(o)
-        })
+    try {
+        matrix = getStyle(el, 'WebkitTransform')
+            .match(/[+-]?\d*[.]?\d+(?=,|\))/g)
+            .map((o) => {
+                return parseInt(o)
+            })
+    } catch (e) {}
+    
     let matrixLen = matrix.length
     let matrixObject = {}
     let is3D = matrixLen > 6
