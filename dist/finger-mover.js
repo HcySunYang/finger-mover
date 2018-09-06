@@ -1,5 +1,5 @@
 /*!
- * finger-mover.js v1.4.1
+ * finger-mover.js v1.4.2
  * (c) 2018 HcySunYang
  * Released under the MIT License.
  */
@@ -123,11 +123,14 @@ function getPropFromMatrix (el) {
     if (matrix === 'none') {
         return {}
     }
-    matrix = getStyle(el, 'WebkitTransform')
-        .match(/[+-]?\d*[.]?\d+(?=,|\))/g)
-        .map(function (o) {
-            return parseInt(o)
-        });
+    try {
+        matrix = getStyle(el, 'WebkitTransform')
+            .match(/[+-]?\d*[.]?\d+(?=,|\))/g)
+            .map(function (o) {
+                return parseInt(o)
+            });
+    } catch (e) {}
+    
     var matrixLen = matrix.length;
     var matrixObject = {};
     var is3D = matrixLen > 6;
